@@ -1,4 +1,4 @@
-export const initialState = {
+const initialState = {
   products: {},
   users: {
     isSignedIn: false,
@@ -6,3 +6,5 @@ export const initialState = {
     username: "",
   },
 };
+
+export default initialState;
