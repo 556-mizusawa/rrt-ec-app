@@ -1,3 +1,11 @@
+export interface initialStateInter {
+  users: {
+    isSignedIn: boolean;
+    uid: "" | string;
+    username: "" | string;
+  };
+}
+
 const initialState = {
   products: {},
   users: {
