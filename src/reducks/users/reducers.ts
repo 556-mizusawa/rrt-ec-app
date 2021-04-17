@@ -1,10 +1,10 @@
 import * as Actions from "./actions";
 import initialState from "../store/initialState";
-import { actionType } from "./interface";
+import { UserState } from "./types";
 
 export const UsersReducer = (
   state = initialState.users,
-  action: { type: "SIGN_IN"; payload: actionType["payload"] }
+  action: { type: "SIGN_IN"; payload: UserState }
 ) => {
   switch (action.type) {
     case Actions.SIGN_IN:

@@ -1,7 +1,10 @@
-import { actionType } from "./interface";
+import { UserState } from "./types";
 
 export const SIGN_IN = "SIGN_IN";
-export const signInAction = (userState: { uid: string; username: string }) => {
+export const signInAction = (userState: {
+  uid: UserState;
+  username: UserState;
+}) => {
   return {
     type: "SIGN_IN",
     payload: {
@@ -13,7 +16,7 @@ export const signInAction = (userState: { uid: string; username: string }) => {
 };
 
 export const SIGN_OUT = "SIGN_OUT";
-export const signOutAction = (): actionType => {
+export const signOutAction = () => {
   return {
     type: "SIGN_OUT",
     payload: {
