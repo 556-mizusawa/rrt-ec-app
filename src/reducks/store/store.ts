@@ -1,8 +1,6 @@
 import {
   createStore as reduxCreateStore,
   combineReducers,
-  Store,
-  $CombinedState,
   applyMiddleware,
 } from "redux";
 import { connectRouter, routerMiddleware } from "connected-react-router";
