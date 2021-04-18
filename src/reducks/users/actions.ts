@@ -1,7 +1,7 @@
-import { actionType } from "./interface";
+import { initialStateInter } from "../store/initialState";
 
 export const SIGN_IN = "SIGN_IN";
-export const signInAction = (userState: { uid: string; username: string }) => {
+export const signInAction = (userState: initialStateInter) => {
   return {
     type: "SIGN_IN",
     payload: {
@@ -13,7 +13,7 @@ export const signInAction = (userState: { uid: string; username: string }) => {
 };
 
 export const SIGN_OUT = "SIGN_OUT";
-export const signOutAction = (): actionType => {
+export const signOutAction = () => {
   return {
     type: "SIGN_OUT",
     payload: {
