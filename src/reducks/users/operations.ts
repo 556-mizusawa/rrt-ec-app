@@ -10,11 +10,11 @@ export const signIn = () => {
     if (!isSignedIn) {
       const url = "https://api.github.com/users/556-mizusawa";
 
-      const res = await fetch(url)
+      const response = await fetch(url)
         .then((res) => res.json())
         .catch(() => null);
 
-      const username = res.login;
+      const username = response.login;
 
       dispatch(
         signInAction({

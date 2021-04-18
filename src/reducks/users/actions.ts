@@ -1,5 +1,4 @@
 import { initialStateInter } from "../store/initialState";
-import { UserState } from "./types";
 
 export const SIGN_IN = "SIGN_IN";
 export const signInAction = (userState: initialStateInter) => {

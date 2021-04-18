@@ -1,5 +1,7 @@
-export interface UserState {
-  isSignedIn: boolean;
-  uid: string;
-  username: string;
-}
+export type UserState = {
+  user: {
+    isSignedIn: boolean;
+    uid: string;
+    username: string;
+  };
+};
