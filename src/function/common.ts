@@ -8,13 +8,13 @@ import HTMLReactParser from "html-react-parser";
  */
 
 export const attachFiles = (id: string, type: string) => {
-  const element: HTMLInputElement = <HTMLInputElement>(
-    document.getElementById(id)
-  );
+  const element: HTMLInputElement = document.getElementById(
+    id
+  ) as HTMLInputElement;
 
-  const elementThumb: HTMLInputElement = <HTMLInputElement>(
-    document.getElementById(`${id}-thumb`)
-  );
+  const elementThumb: HTMLInputElement = document.getElementById(
+    `${id}-thumb`
+  ) as HTMLInputElement;
 
   if (type === "remove") {
     return element.removeEventListener("change", () => null);
@@ -124,8 +124,13 @@ export const datetimeToString = (dt: {
  * @returns {boolean}
  */
 export const isValidEmailFormat = (email: string): boolean => {
-  const regex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  const regex = /^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   return regex.test(email);
+};
+
+export const isValidPasswordFormat = (password: string): boolean => {
+  const regexp = /^[a-zA-Z0-9!@#$%^&*()_+-=[]{};:?,.]+$/;
+  return regexp.test(password);
 };
 
 /**
