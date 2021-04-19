@@ -5,6 +5,7 @@ import { TextInputProps } from "./type";
 const TextInput = (props: TextInputProps) => {
   return (
     <TextFieled
+      autoFocus={props.autoFocus}
       fullWidth={props.fullWidth}
       label={props.label}
       margin="dense"

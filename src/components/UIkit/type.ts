@@ -1,4 +1,5 @@
 export type TextInputProps = {
+  autoFocus?: boolean | undefined;
   fullWidth: boolean | undefined;
   label: string;
   multiline: boolean | undefined;
