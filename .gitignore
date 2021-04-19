@@ -22,7 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-firebase/
+src/firebase/config.ts
+src/firebase/sdkmodule.ts
 .firebase/
 /firestore.rules
 /firestore.indexes.json
