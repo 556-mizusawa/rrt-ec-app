@@ -56,7 +56,7 @@ export const signUp = (
     }
 
     if (!isValidPasswordFormat(password)) {
-      alert("パスワードは半角英数字と記号を入力してください");
+      alert("パスワードは6文字以上15文字以内半角英数字で入力してください");
       return false;
     }
 

@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const selector = useSelector((state: any) => state);
-  console.log(selector);
   const uid = getUserId(selector);
   const username = getUsername(selector);
 

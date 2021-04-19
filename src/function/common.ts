@@ -128,8 +128,13 @@ export const isValidEmailFormat = (email: string): boolean => {
   return regex.test(email);
 };
 
+/**
+ * Validate input password
+ * @param password
+ * @returns {boolean}
+ */
 export const isValidPasswordFormat = (password: string): boolean => {
-  const regexp = /^[a-zA-Z0-9!@#$%^&*()_+-=[]{};:?,.]+$/;
+  const regexp = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]{6,15}$/i;
   return regexp.test(password);
 };
 
