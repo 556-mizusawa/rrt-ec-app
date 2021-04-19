@@ -1,7 +1,8 @@
 import React from "react";
 import TextFieled from "@material-ui/core/TextField";
+import { TextInputProps } from "./type";
 
-const TextInput = (props) => {
+const TextInput = (props: TextInputProps) => {
   return (
     <TextFieled
       fullWidth={props.fullWidth}
