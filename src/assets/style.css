@@ -138,8 +138,9 @@
 }
 
 .u-text__headline {
-  color: #4dd0e1;
+  color: #5c5c5c;
   font-size: 1.563rem;
+  font-weight: 500;
   margin: 0 auto 1rem auto;
 }
 

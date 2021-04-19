@@ -1,3 +1,8 @@
+export type PrimaryButtonProps = {
+  onClick: () => void;
+  label: string | undefined;
+};
+
 export type TextInputProps = {
   autoFocus?: boolean | undefined;
   fullWidth: boolean | undefined;
