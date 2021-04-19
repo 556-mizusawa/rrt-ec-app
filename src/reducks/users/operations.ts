@@ -6,31 +6,48 @@ import {
   isValidPasswordFormat,
   isValidRequiredInput,
 } from "../../function/common";
+import { hideLoadingAction, showLoadingAction } from "../loading/actions";
 import { auth, db, FirebaseTimeStamp } from "../../firebase/index";
 
-export const signIn = () => {
-  return async (dispatch: Dispatch<{}>, getState: () => any) => {
-    const state = getState();
-    const isSignedIn = state.users.isSignedIn;
-
-    if (!isSignedIn) {
-      const url = "https://api.github.com/users/556-mizusawa";
-
-      const response = await fetch(url)
-        .then((res) => res.json())
-        .catch(() => null);
-
-      const username = response.login;
-
-      dispatch(
-        signInAction({
-          isSignedIn: true,
-          uid: "0001",
-          username: username,
-        })
-      );
-      dispatch(push("/"));
+export const signIn = (email: string, password: string) => {
+  return async (dispatch: Dispatch<{}>) => {
+    dispatch(showLoadingAction("Sign in..."));
+    if (!isValidRequiredInput(email, password)) {
+      dispatch(hideLoadingAction());
+      alert("メールアドレスかパスワードが未入力です。");
+      return false;
     }
+    if (!isValidEmailFormat(email)) {
+      dispatch(hideLoadingAction());
+      alert("メールアドレスの形式が不正です。");
+      return false;
+    }
+
+    auth.signInWithEmailAndPassword(email, password).then((result) => {
+      const user = result.user;
+
+      if (user) {
+        const uid = user.uid;
+
+        db.collection("users")
+          .doc(uid)
+          .get()
+          .then((snapshot) => {
+            const data: any = snapshot.data();
+
+            dispatch(
+              signInAction({
+                isSignedIn: true,
+                role: data.role,
+                uid: uid,
+                username: data.username,
+              })
+            );
+
+            dispatch(push("/"));
+          });
+      }
+    });
   };
 };
 
