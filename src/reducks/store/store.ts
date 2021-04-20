@@ -8,7 +8,7 @@ import { UsersReducer } from "../users/reducers";
 import { History } from "history";
 import thunk from "redux-thunk";
 
-const createStore = (history: History<unknown>) => {
+const createStore = (history: History<unknown>): ReturnType<any> => {
   return reduxCreateStore(
     combineReducers({
       router: connectRouter(history),

@@ -7,7 +7,10 @@ import HTMLReactParser from "html-react-parser";
  * @param {string} id The identifier of input tag for uploading files
  */
 
-export const attachFiles = (id: string, type: string) => {
+export const attachFiles: (id: string, type: string) => void = (
+  id: string,
+  type: string
+) => {
   const element: HTMLInputElement = document.getElementById(
     id
   ) as HTMLInputElement;
@@ -21,8 +24,7 @@ export const attachFiles = (id: string, type: string) => {
   } else if (type === "add") {
     element.addEventListener("change", (event: any) => {
       const file = event.target.files;
-      // @ts-ignore
-      let blob = new Blob(file, { type: "image/jpeg" });
+      const blob = new Blob(file, { type: "image/jpeg" });
 
       // Generate random 16 digits strings
       const S =
@@ -38,7 +40,7 @@ export const attachFiles = (id: string, type: string) => {
         "state_changed",
         (snapshot) => {
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          let progress =
+          const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
         },
@@ -63,7 +65,9 @@ export const attachFiles = (id: string, type: string) => {
  * @param {string} text The row text
  * @returns {void | string | never} The formatted text
  */
-export const returnCodeToBr = (text: string) => {
+export const returnCodeToBr: (
+  text: string
+) => string | JSX.Element | JSX.Element[] = (text: string) => {
   if (text === "") {
     return text;
   } else {

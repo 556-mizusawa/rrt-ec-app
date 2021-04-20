@@ -13,7 +13,9 @@ const useStyles = makeStyles({
   },
 });
 
-const PrimaryButton = (props: PrimaryButtonProps) => {
+const PrimaryButton: React.FC<PrimaryButtonProps> = (
+  props: PrimaryButtonProps
+) => {
   const classes = useStyles();
 
   return (
@@ -21,8 +23,7 @@ const PrimaryButton = (props: PrimaryButtonProps) => {
       className={classes.button}
       variant={"contained"}
       onClick={() => props.onClick()}
-      color="primary"
-    >
+      color="primary">
       {props.label}
     </Button>
   );
