@@ -8,13 +8,13 @@
   },
   // パーサー
   "parser": "@typescript-eslint/parser",
-  // jsx を使います
+  // jsx を使用
   "parserOptions": {
     "ecmaVersion": 2018,
     "ecmaFeatures": {
       "jsx": true
     },
-    // import 文でモジュールを使用します
+    // import 文でモジュールを使用
     "sourceType": "module"
   },
   // React のバージョンは自動検出に
@@ -36,6 +36,7 @@
   ],
   "rules": {
     // TypeScirpt なので prop-types は要らない
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "@typescript-eslint/ban-ts-ignore": "off"
   }
 }
