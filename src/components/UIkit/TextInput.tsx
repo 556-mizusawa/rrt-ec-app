@@ -15,6 +15,9 @@ const TextInput = (props: TextInputProps) => {
       value={props.value}
       type={props.type}
       onChange={props.onChange}
+      onKeyDown={props.onKeyDown}
+      onCompositionStart={props.onCompositionStart}
+      onCompositionEnd={props.onCompositionEnd}
     />
   );
 };

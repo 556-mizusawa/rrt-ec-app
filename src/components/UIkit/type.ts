@@ -1,3 +1,5 @@
+import { CompositionEventHandler, KeyboardEventHandler } from "react";
+
 export type PrimaryButtonProps = {
   onClick: () => void;
   label: string | undefined;
@@ -15,4 +17,7 @@ export type TextInputProps = {
   onChange:
     | React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>
     | undefined;
+  onKeyDown?: KeyboardEventHandler<HTMLDivElement> | undefined;
+  onCompositionStart?: CompositionEventHandler<HTMLDivElement> | undefined;
+  onCompositionEnd?: CompositionEventHandler<HTMLDivElement> | undefined;
 };
