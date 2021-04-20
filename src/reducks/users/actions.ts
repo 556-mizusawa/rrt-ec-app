@@ -1,7 +1,7 @@
-import { initialStateInter } from "../store/initialState";
+import { initialStateType } from "../store/type";
 
 export const SIGN_IN = "SIGN_IN";
-export const signInAction = (userState: initialStateInter) => {
+export const signInAction = (userState: initialStateType) => {
   return {
     type: "SIGN_IN",
     payload: {

@@ -9,6 +9,36 @@ import {
 import { hideLoadingAction, showLoadingAction } from "../loading/actions";
 import { auth, db, FirebaseTimeStamp } from "../../firebase/index";
 
+export const listenAuthState = () => {
+  return async (dispatch: Dispatch<{}>) => {
+    return auth.onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid;
+
+        db.collection("users")
+          .doc(uid)
+          .get()
+          .then((snapshot) => {
+            const data: any = snapshot.data();
+
+            dispatch(
+              signInAction({
+                isSignedIn: true,
+                role: data.role,
+                uid: uid,
+                username: data.username,
+              })
+            );
+
+            dispatch(push("/"));
+          });
+      } else {
+        dispatch(push("/signin"));
+      }
+    });
+  };
+};
+
 export const signIn = (email: string, password: string) => {
   return async (dispatch: Dispatch<{}>) => {
     dispatch(showLoadingAction("Sign in..."));
