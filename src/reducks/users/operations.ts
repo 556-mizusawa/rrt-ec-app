@@ -1,4 +1,4 @@
-import { signInAction } from "./actions";
+import { signInAction, signOutAction } from "./actions";
 import { push } from "connected-react-router";
 import { Dispatch } from "react";
 import {
@@ -138,5 +138,14 @@ export const signUp = (
             });
         }
       });
+  };
+};
+
+export const signOut = () => {
+  return async (dispatch: Dispatch<{}>) => {
+    auth.signOut().then(() => {
+      dispatch(signOutAction());
+      dispatch(push("/.signin"));
+    });
   };
 };
