@@ -57,6 +57,7 @@ const SignIn: React.FC = () => {
       <Divider />
       <div className="module-spacer--medium" />
       <TextInput
+        autoFocus={true}
         fullWidth={true}
         label={"メールアドレス"}
         multiline={false}

@@ -1,10 +1,3 @@
-export interface initialStateInter {
-  isSignedIn: boolean;
-  role: string;
-  uid: string;
-  username: string;
-}
-
 const initialState = {
   products: {},
   users: {
