@@ -39,6 +39,29 @@ export const listenAuthState = () => {
   };
 };
 
+export const resetPassword = (email: string) => {
+  return async (dispatch: Dispatch<{}>) => {
+    if (!isValidRequiredInput(email)) {
+      alert("必須項目が未入力です。");
+      return false;
+    } else {
+      auth
+        .sendPasswordResetEmail(email)
+        .then(() => {
+          alert(
+            "入力されたアドレスにパスワードリセット用のメールをお送りしました。"
+          );
+          dispatch(push("./signin"));
+        })
+        .catch(() => {
+          alert(
+            "パスワードリセットに失敗しました。通信環境をご確認の上再度お試し下さい。"
+          );
+        });
+    }
+  };
+};
+
 export const signIn = (email: string, password: string) => {
   return async (dispatch: Dispatch<{}>) => {
     dispatch(showLoadingAction("Sign in..."));
