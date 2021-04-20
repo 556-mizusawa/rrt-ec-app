@@ -148,6 +148,10 @@
   display: none;
 }
 
+.u-pointer-set {
+  cursor: pointer;
+}
+
 @media screen and (min-width: 576px) {
   /*********** Module Spacer ***********/
   .module-spacer--extra-extra-small {

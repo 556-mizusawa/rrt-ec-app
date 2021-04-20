@@ -5,6 +5,7 @@ import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { push } from "connected-react-router";
 import React, { KeyboardEvent, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { PrimaryButton, TextInput } from "../components/UIkit";
@@ -103,6 +104,18 @@ const SignIn: React.FC = () => {
           label={"ログイン"}
           onClick={() => dispatch(signIn(email, password))}
         />
+
+        <div className="module-spacer--extra-extra-small" />
+
+        <p className="u-pointer-set" onClick={() => dispatch(push("./signup"))}>
+          アカウントをお持ちでない方はこちら
+        </p>
+        <p
+          className="u-pointer-set"
+          onClick={() => dispatch(push("./signin/reset"))}
+        >
+          パスワードを忘れた方はこちら
+        </p>
       </div>
     </div>
   );
