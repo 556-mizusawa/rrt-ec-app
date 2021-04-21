@@ -1,4 +1,9 @@
-import { CompositionEventHandler, KeyboardEventHandler } from "react";
+import {
+  CompositionEventHandler,
+  Dispatch,
+  KeyboardEventHandler,
+  SetStateAction,
+} from "react";
 
 export type PrimaryButtonProps = {
   onClick: () => void;
@@ -20,4 +25,15 @@ export type TextInputProps = {
   onKeyDown?: KeyboardEventHandler<HTMLDivElement> | undefined;
   onCompositionStart?: CompositionEventHandler<HTMLDivElement> | undefined;
   onCompositionEnd?: CompositionEventHandler<HTMLDivElement> | undefined;
+};
+
+export type SelectBoxProps = {
+  label: string;
+  required: boolean | undefined;
+  value: string | undefined;
+  // onChange?:
+  //   | React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>
+  //   | undefined;
+  select: Dispatch<SetStateAction<string | any>>;
+  options: any;
 };

@@ -1,6 +1,6 @@
 import { signInAction, signOutAction } from "./actions";
-import { push } from "connected-react-router";
-import { Dispatch } from "react";
+import { Push, push } from "connected-react-router";
+import { Dispatch, SetStateAction } from "react";
 import {
   isValidEmailFormat,
   isValidPasswordFormat,
@@ -8,9 +8,13 @@ import {
 } from "../../function/common";
 import { hideLoadingAction, showLoadingAction } from "../loading/actions";
 import { auth, db, FirebaseTimeStamp } from "../../firebase/index";
+import { initialStateType } from "../store/type";
+import { userActionType } from "./type";
 
-export const listenAuthState: () => (dispatch: any) => Promise<any> = () => {
-  return async (dispatch: any) => {
+export const listenAuthState: () => (
+  dispatch: Dispatch<SetStateAction<initialStateType>>
+) => Promise<any> = () => {
+  return async (dispatch: Dispatch<SetStateAction<userActionType | any>>) => {
     return auth.onAuthStateChanged((user) => {
       if (user) {
         const uid = user.uid;
@@ -29,8 +33,6 @@ export const listenAuthState: () => (dispatch: any) => Promise<any> = () => {
                 username: data.username,
               })
             );
-
-            dispatch(push("/"));
           });
       } else {
         dispatch(push("/signin"));
@@ -41,8 +43,8 @@ export const listenAuthState: () => (dispatch: any) => Promise<any> = () => {
 
 export const resetPassword: (
   email: string
-) => (dispatch: any) => Promise<false | undefined> = (email: string) => {
-  return async (dispatch) => {
+) => (dispatch: Push | any) => Promise<false | undefined> = (email: string) => {
+  return async (dispatch: Push | any) => {
     if (!isValidRequiredInput(email)) {
       alert("必須項目が未入力です。");
       return false;
