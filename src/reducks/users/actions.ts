@@ -1,8 +1,10 @@
-import { initialStateType } from "../store/type";
+import { initialStateUsersType } from "../store/type";
 import { userActionType } from "./type";
 
 export const SIGN_IN = "SIGN_IN";
-export const signInAction = (userState: initialStateType): userActionType => {
+export const signInAction = (
+  userState: initialStateUsersType
+): userActionType => {
   return {
     type: "SIGN_IN",
     payload: {
