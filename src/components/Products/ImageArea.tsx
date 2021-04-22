@@ -3,7 +3,7 @@ import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import { Fab, makeStyles } from "@material-ui/core";
 import { storage } from "../../firebase";
 import { ImagePreview } from "./index";
-import { imagesProps } from "./type";
+import { imageAreaProps, imagesProps } from "./type";
 
 const useStyles = makeStyles({
   icon: {
@@ -12,12 +12,7 @@ const useStyles = makeStyles({
   },
 });
 
-type Props = {
-  images: [];
-  setImages: (value: any) => void;
-};
-
-const ImageArea: React.FC<Props> = ({ images, setImages }) => {
+const ImageArea: React.FC<imageAreaProps> = ({ images, setImages }) => {
   const classes = useStyles();
 
   const deleteImage = useCallback(
