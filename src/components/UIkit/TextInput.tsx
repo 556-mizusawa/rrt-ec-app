@@ -2,7 +2,7 @@ import React from "react";
 import TextFieled from "@material-ui/core/TextField";
 import { TextInputProps } from "./type";
 
-const TextInput = (props: TextInputProps) => {
+const TextInput: React.FC<TextInputProps> = (props: TextInputProps) => {
   return (
     <TextFieled
       autoFocus={props.autoFocus}

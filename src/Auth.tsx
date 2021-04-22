@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsSignedIn } from "./reducks/users/selectors";
 import { listenAuthState } from "./reducks/users/operations";
-import { initialStateType } from "./reducks/store/type";
+import { initialStateUsersType } from "./reducks/store/type";
 
-const Auth: React.FC<{ children: JSX.Element }> = ({ children }) => {
+const Auth = ({ children }: { children: any }) => {
   const dispatch = useDispatch();
-  const selector = useSelector((state: { users: initialStateType }) => state);
+  const selector = useSelector(
+    (state: { users: initialStateUsersType }) => state
+  );
   const isSignedIn = getIsSignedIn(selector);
 
   useEffect(() => {

@@ -1,9 +1,9 @@
 import React from "react";
 import { Route, Switch } from "react-router";
-import { Home, SignIn, SignUp, Reset } from "./templates";
+import { Home, ProductEdit, SignIn, SignUp, Reset } from "./templates";
 import Auth from "./Auth";
 
-const Router = () => {
+const Router: React.FC = () => {
   return (
     <Switch>
       <Route exact path="/signup" component={SignUp} />
@@ -11,6 +11,7 @@ const Router = () => {
       <Route exact path="/signin/reset" component={Reset} />
 
       <Auth>
+        <Route exact path="/product/edit" component={ProductEdit} />
         <Route exact path="(/)?" component={Home} />
       </Auth>
     </Switch>
