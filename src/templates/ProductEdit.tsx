@@ -1,0 +1,108 @@
+import { Divider } from "@material-ui/core";
+import React, { useCallback, useState } from "react";
+import { PrimaryButton, SelectBox, TextInput } from "../components/UIkit";
+
+const ProductEdit: React.FC = () => {
+  const [name, setName] = useState(""),
+    [description, setDiscription] = useState(""),
+    [category, setCategory] = useState(""),
+    [gender, setGender] = useState(""),
+    [price, setPrice] = useState("");
+
+  const inputName = useCallback(
+    (event) => {
+      setName(event.target.value);
+    },
+    [setName]
+  );
+
+  const inputDiscription = useCallback(
+    (event) => {
+      setDiscription(event.target.value);
+    },
+    [setDiscription]
+  );
+
+  const inputPrice = useCallback(
+    (event) => {
+      setPrice(event.target.value);
+    },
+    [setPrice]
+  );
+
+  const categories = [
+    { id: "tops", name: "トップス" },
+    { id: "jkt", name: "ジャケット" },
+    { id: "shirts", name: "シャツ" },
+    { id: "pants", name: "パンツ" },
+    { id: "シューズ", name: "シューズ" },
+  ];
+
+  const genders = [
+    { id: "all", name: "全て" },
+    { id: "male", name: "男性" },
+    { id: "female", name: "女性" },
+  ];
+
+  return (
+    <section className="c-section-container">
+      <h2 className="u-text__headline u-text-center">商品登録・編集</h2>
+      <Divider />
+      <div className="c-section-container">
+        <div className="module-spacer--medium" />
+
+        <TextInput
+          fullWidth={true}
+          label={"商品名"}
+          multiline={false}
+          required={true}
+          onChange={inputName}
+          rows={1}
+          value={name}
+          type={"text"}
+        />
+        <TextInput
+          fullWidth={true}
+          label={"商品説明"}
+          multiline={true}
+          required={true}
+          onChange={inputDiscription}
+          rows={5}
+          value={description}
+          type={"text"}
+        />
+        <SelectBox
+          label={"カテゴリー"}
+          required={true}
+          options={categories}
+          select={setCategory}
+          value={category}
+        />
+        <SelectBox
+          label={"性別"}
+          required={true}
+          options={genders}
+          select={setGender}
+          value={gender}
+        />
+        <TextInput
+          fullWidth={true}
+          label={"商品価格"}
+          multiline={false}
+          required={true}
+          onChange={inputPrice}
+          rows={1}
+          value={price}
+          type={"number"}
+        />
+
+        <div className="module-spacer--medium" />
+        <div className="center">
+          <PrimaryButton label={"商品情報を保存"} onClick={() => {}} />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ProductEdit;
