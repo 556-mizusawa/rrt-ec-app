@@ -1,4 +1,4 @@
-import { storage } from "../firebase/index";
+// import { storage } from "../firebase/index";
 import HTMLReactParser from "html-react-parser";
 
 /**
@@ -7,58 +7,58 @@ import HTMLReactParser from "html-react-parser";
  * @param {string} id The identifier of input tag for uploading files
  */
 
-export const attachFiles: (id: string, type: string) => void = (
-  id: string,
-  type: string
-) => {
-  const element: HTMLInputElement = document.getElementById(
-    id
-  ) as HTMLInputElement;
+// export const attachFiles: (id: string, type: string) => void = (
+//   id: string,
+//   type: string
+// ) => {
+//   const element: HTMLInputElement = document.getElementById(
+//     id
+//   ) as HTMLInputElement;
 
-  const elementThumb: HTMLInputElement = document.getElementById(
-    `${id}-thumb`
-  ) as HTMLInputElement;
+//   const elementThumb: HTMLInputElement = document.getElementById(
+//     `${id}-thumb`
+//   ) as HTMLInputElement;
 
-  if (type === "remove") {
-    return element.removeEventListener("change", () => null);
-  } else if (type === "add") {
-    element.addEventListener("change", (event: any) => {
-      const file = event.target.files;
-      const blob = new Blob(file, { type: "image/jpeg" });
+//   if (type === "remove") {
+//     return element.removeEventListener("change", () => null);
+//   } else if (type === "add") {
+//     element.addEventListener("change", (event) => {
+//       const file = event.target.files;
+//       const blob = new Blob(file, { type: "image/jpeg" });
 
-      // Generate random 16 digits strings
-      const S =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      const N = 16;
-      const fileName = Array.from(crypto.getRandomValues(new Uint32Array(N)))
-        .map((n) => S[n % S.length])
-        .join("");
+//       // Generate random 16 digits strings
+//       const S =
+//         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+//       const N = 16;
+//       const fileName = Array.from(crypto.getRandomValues(new Uint32Array(N)))
+//         .map((n) => S[n % S.length])
+//         .join("");
 
-      const uploadRef = storage.ref("images").child(fileName);
-      const uploadTask = uploadRef.put(blob);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-        },
-        (error) => {
-          // Handle unsuccessful uploads
-          console.error("Failed to upload file. ERROR: ", error);
-        },
-        () => {
-          // Handle successful uploads on complete
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            console.log("File available at", downloadURL);
-            elementThumb.setAttribute("src", downloadURL);
-          });
-        }
-      );
-    });
-  }
-};
+//       const uploadRef = storage.ref("images").child(fileName);
+//       const uploadTask = uploadRef.put(blob);
+//       uploadTask.on(
+//         "state_changed",
+//         (snapshot) => {
+//           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+//           const progress =
+//             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//           console.log("Upload is " + progress + "% done");
+//         },
+//         (error) => {
+//           // Handle unsuccessful uploads
+//           console.error("Failed to upload file. ERROR: ", error);
+//         },
+//         () => {
+//           // Handle successful uploads on complete
+//           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+//             console.log("File available at", downloadURL);
+//             elementThumb.setAttribute("src", downloadURL);
+//           });
+//         }
+//       );
+//     });
+//   }
+// };
 
 /**
  * Convert Carriage Return and Line Feed into <br> tag.

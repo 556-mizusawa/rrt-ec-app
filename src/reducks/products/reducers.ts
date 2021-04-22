@@ -9,7 +9,7 @@ export const ProductsReducer: (
   action: any
 ) => {
   list: never[];
-} = (state = initialState.products, action: any) => {
+} = (state = initialState.products, action) => {
   switch (action.type) {
     default:
       return state;

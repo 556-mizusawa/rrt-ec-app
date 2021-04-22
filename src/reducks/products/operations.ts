@@ -1,4 +1,5 @@
 import { CallHistoryMethodAction, push } from "connected-react-router";
+import { Dispatch } from "react";
 import { db, FirebaseTimeStamp } from "../../firebase";
 import { dataType } from "./type";
 
@@ -13,7 +14,7 @@ export const saveProduct = (
   images: []
 ) => {
   return async (
-    dispatch: (arg0: CallHistoryMethodAction<[string, unknown?]>) => void
+    dispatch: Dispatch<CallHistoryMethodAction<[string, unknown?]>>
   ): Promise<void> => {
     const timeStamp = FirebaseTimeStamp.now();
 

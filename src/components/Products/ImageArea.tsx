@@ -12,10 +12,12 @@ const useStyles = makeStyles({
   },
 });
 
-const ImageArea: (props: {
+type Props = {
   images: [];
   setImages: (value: any) => void;
-}) => JSX.Element = (props) => {
+};
+
+const ImageArea: React.FC<Props> = ({ images, setImages }) => {
   const classes = useStyles();
 
   const deleteImage = useCallback(
@@ -24,14 +26,14 @@ const ImageArea: (props: {
       if (!ret) {
         return false;
       } else {
-        const newImages = props.images.filter(
+        const newImages = images.filter(
           (image: { id: string | void }) => image.id !== id
         );
-        props.setImages(newImages);
+        setImages(newImages);
         return storage.ref("image").child(id).delete();
       }
     },
-    [props.images]
+    [images, setImages]
   );
 
   const uploadImage = useCallback(
@@ -52,18 +54,18 @@ const ImageArea: (props: {
       uploadTask.then(() => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           const newImage = { id: filename, path: downloadURL };
-          props.setImages((prevState: any) => [...prevState, newImage]);
+          setImages((prevState: any) => [...prevState, newImage]);
         });
       });
     },
-    [props.setImages]
+    [setImages]
   );
 
   return (
     <div>
       <div className="p-grid__list-images">
-        {props.images.length > 0 &&
-          props.images.map((image: imagesProps) => (
+        {images.length > 0 &&
+          images.map((image: imagesProps) => (
             <ImagePreview
               delete={deleteImage}
               id={image.id}

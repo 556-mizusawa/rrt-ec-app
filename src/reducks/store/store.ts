@@ -9,7 +9,7 @@ import { ProductsReducer } from "../products/reducers";
 import { History } from "history";
 import thunk from "redux-thunk";
 
-const createStore = (history: History<unknown>): ReturnType<any> => {
+const createStore = (history: History<unknown>) => {
   return reduxCreateStore(
     combineReducers({
       products: ProductsReducer,

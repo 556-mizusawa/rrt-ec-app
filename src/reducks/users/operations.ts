@@ -1,6 +1,6 @@
 import { signInAction, signOutAction } from "./actions";
-import { Push, push } from "connected-react-router";
-import { Dispatch, SetStateAction } from "react";
+import { CallHistoryMethodAction, push } from "connected-react-router";
+import { Dispatch } from "react";
 import {
   isValidEmailFormat,
   isValidPasswordFormat,
@@ -8,13 +8,15 @@ import {
 } from "../../function/common";
 import { hideLoadingAction, showLoadingAction } from "../loading/actions";
 import { auth, db, FirebaseTimeStamp } from "../../firebase/index";
-import { initialStateUsersType } from "../store/type";
 import { userActionType } from "./type";
+import { loadingActionType } from "../loading/type";
 
-export const listenAuthState: () => (
-  dispatch: Dispatch<SetStateAction<initialStateUsersType>>
-) => Promise<any> = () => {
-  return async (dispatch: Dispatch<SetStateAction<userActionType | any>>) => {
+export const listenAuthState = () => {
+  return async (
+    dispatch: Dispatch<
+      userActionType | CallHistoryMethodAction<[string, unknown?]>
+    >
+  ) => {
     return auth.onAuthStateChanged((user) => {
       if (user) {
         const uid = user.uid;
@@ -23,7 +25,7 @@ export const listenAuthState: () => (
           .doc(uid)
           .get()
           .then((snapshot) => {
-            const data: any = snapshot.data();
+            const data = snapshot.data()!;
 
             dispatch(
               signInAction({
@@ -41,10 +43,10 @@ export const listenAuthState: () => (
   };
 };
 
-export const resetPassword: (
-  email: string
-) => (dispatch: Push | any) => Promise<false | undefined> = (email: string) => {
-  return async (dispatch: Push | any) => {
+export const resetPassword = (email: string) => {
+  return async (
+    dispatch: Dispatch<CallHistoryMethodAction<[string, unknown?]>>
+  ): Promise<false | undefined> => {
     if (!isValidRequiredInput(email)) {
       alert("必須項目が未入力です。");
       return false;
@@ -66,14 +68,14 @@ export const resetPassword: (
   };
 };
 
-export const signIn: (
-  email: string,
-  password: string
-) => (dispatch: Dispatch<any>) => Promise<false | undefined> = (
-  email: string,
-  password: string
-) => {
-  return async (dispatch) => {
+export const signIn = (email: string, password: string) => {
+  return async (
+    dispatch: Dispatch<
+      | userActionType
+      | loadingActionType
+      | CallHistoryMethodAction<[string, unknown?]>
+    >
+  ): Promise<false | undefined> => {
     dispatch(showLoadingAction("Sign in..."));
     if (!isValidRequiredInput(email, password)) {
       dispatch(hideLoadingAction());
@@ -96,7 +98,7 @@ export const signIn: (
           .doc(uid)
           .get()
           .then((snapshot) => {
-            const data: any = snapshot.data();
+            const data = snapshot.data()!;
 
             dispatch(
               signInAction({
@@ -119,7 +121,11 @@ export const signUp: (
   email: string,
   password: string,
   confirmPassword: string
-) => (dispatch: Dispatch<any>) => Promise<false | void> = (
+) => (
+  dispatch: Dispatch<
+    userActionType | CallHistoryMethodAction<[string, unknown?]>
+  >
+) => Promise<false | void> = (
   username: string,
   email: string,
   password: string,
@@ -179,8 +185,12 @@ export const signUp: (
   };
 };
 
-export const signOut: () => (dispatch: Dispatch<any>) => Promise<void> = () => {
-  return async (dispatch) => {
+export const signOut = () => {
+  return async (
+    dispatch: Dispatch<
+      userActionType | CallHistoryMethodAction<[string, unknown?]>
+    >
+  ): Promise<void> => {
     auth.signOut().then(() => {
       dispatch(signOutAction());
       dispatch(push("/.signin"));
