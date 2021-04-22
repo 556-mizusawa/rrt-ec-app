@@ -2,11 +2,13 @@ import React from "react";
 import { getUserId, getUsername } from "../reducks/users/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../reducks/users/operations";
-import { initialStateType } from "../reducks/store/type";
+import { initialStateUsersType } from "../reducks/store/type";
 
 const Home: () => JSX.Element = () => {
   const dispatch = useDispatch();
-  const selector = useSelector((state: { users: initialStateType }) => state);
+  const selector = useSelector(
+    (state: { users: initialStateUsersType }) => state
+  );
   const uid = getUserId(selector);
   const username = getUsername(selector);
 

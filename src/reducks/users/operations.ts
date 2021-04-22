@@ -8,11 +8,11 @@ import {
 } from "../../function/common";
 import { hideLoadingAction, showLoadingAction } from "../loading/actions";
 import { auth, db, FirebaseTimeStamp } from "../../firebase/index";
-import { initialStateType } from "../store/type";
+import { initialStateUsersType } from "../store/type";
 import { userActionType } from "./type";
 
 export const listenAuthState: () => (
-  dispatch: Dispatch<SetStateAction<initialStateType>>
+  dispatch: Dispatch<SetStateAction<initialStateUsersType>>
 ) => Promise<any> = () => {
   return async (dispatch: Dispatch<SetStateAction<userActionType | any>>) => {
     return auth.onAuthStateChanged((user) => {
