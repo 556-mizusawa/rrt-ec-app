@@ -9,7 +9,8 @@ export const saveProduct = (
   description: string,
   category: string,
   gender: string,
-  price: string
+  price: string,
+  images: []
 ) => {
   return async (
     dispatch: (arg0: CallHistoryMethodAction<[string, unknown?]>) => void
@@ -20,6 +21,7 @@ export const saveProduct = (
       category: category,
       description: description,
       gender: gender,
+      images: images,
       name: name,
       price: parseInt(price, 10),
       updated_at: timeStamp,

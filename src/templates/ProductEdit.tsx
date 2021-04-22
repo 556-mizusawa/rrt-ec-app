@@ -3,15 +3,17 @@ import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { PrimaryButton, SelectBox, TextInput } from "../components/UIkit";
 import { saveProduct } from "../reducks/products/operations";
+import { ImageArea } from "../components/Products";
 
 const ProductEdit: React.FC = () => {
   const dispatch = useDispatch();
 
-  const [name, setName] = useState(""),
-    [description, setDiscription] = useState(""),
-    [category, setCategory] = useState(""),
-    [gender, setGender] = useState(""),
-    [price, setPrice] = useState("");
+  const [name, setName] = useState<string>(""),
+    [description, setDiscription] = useState<string>(""),
+    [category, setCategory] = useState<string>(""),
+    [gender, setGender] = useState<string>(""),
+    [images, setImages] = useState<[]>([]),
+    [price, setPrice] = useState<string>("");
 
   const inputName = useCallback(
     (event) => {
@@ -54,6 +56,7 @@ const ProductEdit: React.FC = () => {
       <Divider />
       <div className="c-section-container">
         <div className="module-spacer--medium" />
+        <ImageArea images={images} setImages={setImages} />
 
         <TextInput
           fullWidth={true}
@@ -105,7 +108,9 @@ const ProductEdit: React.FC = () => {
           <PrimaryButton
             label={"商品情報を保存"}
             onClick={() =>
-              dispatch(saveProduct(name, description, category, gender, price))
+              dispatch(
+                saveProduct(name, description, category, gender, price, images)
+              )
             }
           />
         </div>
