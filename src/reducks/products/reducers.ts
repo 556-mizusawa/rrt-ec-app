@@ -1,7 +1,15 @@
-import * as Actions from "./actions";
 import initialState from "../store/initialState";
 
-export const ProductsReducer = (state = initialState.products, action: any) => {
+export const ProductsReducer: (
+  state:
+    | {
+        list: never[];
+      }
+    | undefined,
+  action: any
+) => {
+  list: never[];
+} = (state = initialState.products, action: any) => {
   switch (action.type) {
     default:
       return state;

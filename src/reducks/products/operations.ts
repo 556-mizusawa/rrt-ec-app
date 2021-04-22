@@ -13,7 +13,7 @@ export const saveProduct = (
 ) => {
   return async (
     dispatch: (arg0: CallHistoryMethodAction<[string, unknown?]>) => void
-  ) => {
+  ): Promise<void> => {
     const timeStamp = FirebaseTimeStamp.now();
 
     const data: dataType = {

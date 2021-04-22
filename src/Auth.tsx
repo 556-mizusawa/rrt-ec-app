@@ -4,7 +4,7 @@ import { getIsSignedIn } from "./reducks/users/selectors";
 import { listenAuthState } from "./reducks/users/operations";
 import { initialStateUsersType } from "./reducks/store/type";
 
-const Auth = ({ children }: { children: any }) => {
+const Auth: ({ children }: { children: any }) => any = ({ children }) => {
   const dispatch = useDispatch();
   const selector = useSelector(
     (state: { users: initialStateUsersType }) => state
