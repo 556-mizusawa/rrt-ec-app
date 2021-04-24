@@ -4,6 +4,7 @@ export type dataType = {
   gender: string;
   name: string;
   images: [];
+  sizes: [];
   price: number;
   updated_at: any;
   id?: string;

@@ -7,30 +7,28 @@ import {
 
 export type PrimaryButtonProps = {
   onClick: () => void;
-  label: string | undefined;
+  label?: string;
 };
 
 export type TextInputProps = {
-  autoFocus?: boolean | undefined;
-  fullWidth: boolean | undefined;
-  label: string;
-  multiline: boolean | undefined;
-  required: boolean | undefined;
-  rows: number | undefined;
-  value: string;
-  type: string | undefined;
-  onChange:
-    | React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>
-    | undefined;
-  onKeyDown?: KeyboardEventHandler<HTMLDivElement> | undefined;
-  onCompositionStart?: CompositionEventHandler<HTMLDivElement> | undefined;
-  onCompositionEnd?: CompositionEventHandler<HTMLDivElement> | undefined;
+  autoFocus?: boolean;
+  fullWidth?: boolean;
+  label?: string;
+  multiline?: boolean;
+  required?: boolean;
+  rows?: number;
+  value: string | number;
+  type?: string;
+  onChange?: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
+  onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
+  onCompositionStart?: CompositionEventHandler<HTMLDivElement>;
+  onCompositionEnd?: CompositionEventHandler<HTMLDivElement>;
 };
 
 export type SelectBoxProps = {
   label: string;
-  required: boolean | undefined;
-  value: string | undefined;
+  required?: boolean;
+  value?: string;
   // onChange?:
   //   | React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>
   //   | undefined;
