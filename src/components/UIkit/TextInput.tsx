@@ -7,8 +7,9 @@ const TextInput: React.FC<TextInputProps> = (props: TextInputProps) => {
     <TextFieled
       autoFocus={props.autoFocus}
       fullWidth={props.fullWidth}
+      variant="outlined"
       label={props.label}
-      margin="dense"
+      margin="normal"
       multiline={props.multiline}
       required={props.required}
       rows={props.rows}

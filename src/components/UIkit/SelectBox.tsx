@@ -19,7 +19,7 @@ const SelectBox: React.FC<SelectBoxProps> = (props) => {
   const classes = useStyles();
 
   return (
-    <FormControl className={classes.formControl}>
+    <FormControl variant="outlined" className={classes.formControl}>
       <InputLabel>{props.label}</InputLabel>
       <Select
         label={props.label}
