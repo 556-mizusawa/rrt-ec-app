@@ -9,3 +9,8 @@ export type imagesProps = {
   path: string;
   key: string;
 };
+
+export type setSizeProps = {
+  sizes: [] | any;
+  setSizes: (value: any) => void;
+};
