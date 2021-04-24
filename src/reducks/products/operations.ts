@@ -12,7 +12,8 @@ export const saveProduct = (
   category: string,
   gender: string,
   price: string,
-  images: []
+  images: [],
+  sizes: []
 ) => {
   return async (
     dispatch: Dispatch<CallHistoryMethodAction<[string, unknown?]>>
@@ -26,11 +27,12 @@ export const saveProduct = (
       images: images,
       name: name,
       price: parseInt(price, 10),
+      sizes: sizes,
       updated_at: timeStamp,
     };
     if (id === "") {
       const ref = productsRef.doc();
-      const id = ref.id;
+      id = ref.id;
       data.id = id;
       data.created_at = timeStamp;
     }

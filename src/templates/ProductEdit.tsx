@@ -3,11 +3,24 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { PrimaryButton, SelectBox, TextInput } from "../components/UIkit";
 import { saveProduct } from "../reducks/products/operations";
-import { ImageArea } from "../components/Products";
+import { ImageArea, SetSizeArea } from "../components/Products";
 import { db } from "../firebase";
 import firebase from "firebase";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  divider: {
+    margin: "0 auto",
+    maxWidth: 500,
+    padding: 0.5,
+    height: "auto",
+    width: "calc(100% - 2rem)",
+  },
+});
 
 const ProductEdit: React.FC = () => {
+  const classes = useStyles();
+
   const dispatch = useDispatch();
   let id = window.location.pathname.split("/product/edit")[1];
 
@@ -20,7 +33,8 @@ const ProductEdit: React.FC = () => {
     [category, setCategory] = useState<string>(""),
     [gender, setGender] = useState<string>(""),
     [images, setImages] = useState<[]>([]),
-    [price, setPrice] = useState<string>("");
+    [price, setPrice] = useState<string>(""),
+    [sizes, setSizes] = useState<[]>([]);
 
   const inputName = useCallback(
     (event) => {
@@ -70,17 +84,21 @@ const ProductEdit: React.FC = () => {
           setCategory(data.category);
           setGender(data.gender);
           setPrice(data.price);
+          setSizes(data.sizes);
         });
     }
   }, [id]);
 
   return (
-    <section className="c-section-container">
+    <section>
       <h2 className="u-text__headline u-text-center">商品登録・編集</h2>
-      <Divider />
+      <Divider className={classes.divider} />
       <div className="c-section-container">
         <div className="module-spacer--medium" />
+
         <ImageArea images={images} setImages={setImages} />
+
+        <div className="module-spacer--extra-small" />
 
         <TextInput
           fullWidth={true}
@@ -127,7 +145,12 @@ const ProductEdit: React.FC = () => {
           type={"number"}
         />
 
-        <div className="module-spacer--medium" />
+        <div className="module-spacer--small" />
+
+        <SetSizeArea sizes={sizes} setSizes={setSizes} />
+
+        <div className="module-spacer--small" />
+
         <div className="center">
           <PrimaryButton
             label={"商品情報を保存"}
@@ -140,7 +163,8 @@ const ProductEdit: React.FC = () => {
                   category,
                   gender,
                   price,
-                  images
+                  images,
+                  sizes
                 )
               )
             }
