@@ -61,7 +61,7 @@ const Reset: React.FC = () => {
 
         <div className="module-spacer--extra-extra-small" />
 
-        <p className="u-pointer-set" onClick={() => dispatch(push("./signin"))}>
+        <p className="u-pointer-set" onClick={() => dispatch(push("/signin"))}>
           ログイン画面に戻る
         </p>
       </div>

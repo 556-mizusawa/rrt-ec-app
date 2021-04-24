@@ -83,8 +83,7 @@ const SignIn: React.FC = () => {
               <IconButton
                 aria-label="toggle password visibility"
                 onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-              >
+                onMouseDown={handleMouseDownPassword}>
                 {showPassword ? <Visibility /> : <VisibilityOff />}
               </IconButton>
             </InputAdornment>
@@ -112,8 +111,7 @@ const SignIn: React.FC = () => {
         </p>
         <p
           className="u-pointer-set"
-          onClick={() => dispatch(push("./signin/reset"))}
-        >
+          onClick={() => dispatch(push("./signin/reset"))}>
           パスワードを忘れた方はこちら
         </p>
       </div>
