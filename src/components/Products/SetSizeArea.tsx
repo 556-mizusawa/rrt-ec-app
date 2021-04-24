@@ -13,21 +13,26 @@ import { TextInput } from "../UIkit";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import { setSizeProps } from "./type";
+import { Paper } from "@material-ui/core";
 
 const useStyles = makeStyles({
   inputSize: {
-    marginRight: "17px",
+    marginRight: 17,
   },
 
   inputArea: {
     display: "flex",
-    marginTop: 16,
+    marginTop: 10,
+    flexWrap: "nowrap",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
 
   checkIcon: {
-    marginTop: 22,
-    marginLeft: 13,
     boxShadow: "none",
+    marginTop: 2,
+    marginLeft: 7,
   },
   iconCell: {
     height: 48,
@@ -144,6 +149,7 @@ const SetSizeArea: React.FC<setSizeProps> = (props) => {
           <div className={classes.inputArea}>
             <div className={classes.inputSize}>
               <TextInput
+                variant="outlined"
                 fullWidth={false}
                 multiline={false}
                 required={true}
@@ -156,6 +162,7 @@ const SetSizeArea: React.FC<setSizeProps> = (props) => {
 
             <div>
               <TextInput
+                variant="outlined"
                 fullWidth={false}
                 multiline={false}
                 required={true}

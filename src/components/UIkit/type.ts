@@ -11,6 +11,7 @@ export type PrimaryButtonProps = {
 };
 
 export type TextInputProps = {
+  variant?: "standard" | "filled" | "outlined" | undefined;
   autoFocus?: boolean;
   fullWidth?: boolean;
   label?: string;

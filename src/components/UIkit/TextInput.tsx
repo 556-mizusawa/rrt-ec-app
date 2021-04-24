@@ -5,9 +5,9 @@ import { TextInputProps } from "./type";
 const TextInput: React.FC<TextInputProps> = (props: TextInputProps) => {
   return (
     <TextFieled
+      variant={props.variant}
       autoFocus={props.autoFocus}
       fullWidth={props.fullWidth}
-      variant="outlined"
       label={props.label}
       margin="normal"
       multiline={props.multiline}
