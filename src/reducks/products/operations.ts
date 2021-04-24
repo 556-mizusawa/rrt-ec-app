@@ -6,6 +6,7 @@ import { dataType } from "./type";
 const productsRef = db.collection("products");
 
 export const saveProduct = (
+  id: string,
   name: string,
   description: string,
   category: string,
@@ -27,15 +28,16 @@ export const saveProduct = (
       price: parseInt(price, 10),
       updated_at: timeStamp,
     };
-
-    const ref = productsRef.doc();
-    const id = ref.id;
-    data.id = id;
-    data.created_at = timeStamp;
+    if (id === "") {
+      const ref = productsRef.doc();
+      const id = ref.id;
+      data.id = id;
+      data.created_at = timeStamp;
+    }
 
     return productsRef
       .doc(id)
-      .set(data)
+      .set(data, { merge: true })
       .then(() => {
         dispatch(push("/"));
       })
