@@ -47,9 +47,9 @@ const ImageArea: React.FC<imageAreaProps> = ({ images, setImages }) => {
       const uploadTask = uploadRef.put(blob);
 
       uploadTask.then(() => {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL: string) => {
           const newImage = { id: filename, path: downloadURL };
-          setImages((prevState: any) => [...prevState, newImage]);
+          setImages((prevState: []) => [...prevState, newImage]);
         });
       });
     },

@@ -6,10 +6,10 @@ import {
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { UsersReducer } from "../users/reducers";
 import { ProductsReducer } from "../products/reducers";
-import { History } from "history";
 import thunk from "redux-thunk";
+import { CreateStore } from "./type";
 
-const createStore = (history: History<unknown>) => {
+const createStore: CreateStore = (history) => {
   return reduxCreateStore(
     combineReducers({
       products: ProductsReducer,

@@ -7,6 +7,7 @@ import {
   isValidRequiredInput,
 } from "../../function/common";
 import { hideLoadingAction, showLoadingAction } from "../loading/actions";
+import firebase from "firebase";
 import { auth, db, FirebaseTimeStamp } from "../../firebase/index";
 import { userActionType } from "./type";
 import { loadingActionType } from "../loading/type";
@@ -16,7 +17,7 @@ export const listenAuthState = () => {
     dispatch: Dispatch<
       userActionType | CallHistoryMethodAction<[string, unknown?]>
     >
-  ) => {
+  ): Promise<firebase.Unsubscribe> => {
     return auth.onAuthStateChanged((user) => {
       if (user) {
         const uid = user.uid;
@@ -24,8 +25,8 @@ export const listenAuthState = () => {
         db.collection("users")
           .doc(uid)
           .get()
-          .then((snapshot) => {
-            const data = snapshot.data()!;
+          .then((snapshot: firebase.firestore.DocumentData) => {
+            const data = snapshot.data();
 
             dispatch(
               signInAction({
@@ -97,8 +98,8 @@ export const signIn = (email: string, password: string) => {
         db.collection("users")
           .doc(uid)
           .get()
-          .then((snapshot) => {
-            const data = snapshot.data()!;
+          .then((snapshot: firebase.firestore.DocumentData) => {
+            const data = snapshot.data();
 
             dispatch(
               signInAction({
