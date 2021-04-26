@@ -1,16 +1,17 @@
+import * as Actions from "./actions";
 import initialState from "../store/initialState";
 
-export const ProductsReducer: (
-  state:
-    | {
-        list: never[];
-      }
-    | undefined,
-  action: any
+export const ProductsReducer = (
+  state = initialState.products,
+  action: { type: "FETCH_PRODUCTS"; payload: [] }
 ) => {
-  list: never[];
-} = (state = initialState.products, action) => {
   switch (action.type) {
+    case Actions.FETCH_PRODUCTS:
+      return {
+        ...state,
+        list: [...action.payload],
+      };
+
     default:
       return state;
   }
