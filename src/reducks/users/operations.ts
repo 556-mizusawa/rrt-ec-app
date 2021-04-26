@@ -9,6 +9,7 @@ import { hideLoadingAction, showLoadingAction } from "../loading/actions";
 import firebase from "firebase";
 import { auth, db, FirebaseTimeStamp } from "../../firebase/index";
 import { userOpDispatch } from "./type";
+import { FFD } from "../../firebase/types";
 
 export const listenAuthState = () => {
   return async (dispatch: userOpDispatch): Promise<firebase.Unsubscribe> => {
@@ -19,7 +20,7 @@ export const listenAuthState = () => {
         db.collection("users")
           .doc(uid)
           .get()
-          .then((snapshot: firebase.firestore.DocumentData) => {
+          .then((snapshot: FFD) => {
             const data = snapshot.data();
 
             dispatch(
@@ -84,7 +85,7 @@ export const signIn = (email: string, password: string) => {
         db.collection("users")
           .doc(uid)
           .get()
-          .then((snapshot: firebase.firestore.DocumentData) => {
+          .then((snapshot: FFD) => {
             const data = snapshot.data();
 
             dispatch(
@@ -109,10 +110,10 @@ export const signUp: (
   password: string,
   confirmPassword: string
 ) => (dispatch: userOpDispatch) => Promise<false | void> = (
-  username: string,
-  email: string,
-  password: string,
-  confirmPassword: string
+  username,
+  email,
+  password,
+  confirmPassword
 ) => {
   return async (dispatch) => {
     if (!isValidRequiredInput(email, password, confirmPassword)) {
