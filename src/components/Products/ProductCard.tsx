@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -8,6 +8,11 @@ import { productsProps } from "./type";
 import NoImage from "../../assets/img/noimg.png";
 import { push } from "connected-react-router";
 import { useDispatch } from "react-redux";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import Menuitem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { deleteProduct } from "../../reducks/products/operations";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -40,11 +45,24 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.secondary.main,
     fontSize: 16,
   },
+  menuButton: {
+    marginLeft: 150,
+  },
 }));
 
 const ProductCard: React.FC<productsProps> = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const [anchorEl, setAnchorEl] = useState<null | undefined>(null);
+
+  const handleClick = (event: { currentTarget: any }) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const images = props.images.length > 0 ? props.images : [{ path: NoImage }];
   const price = props.price.toLocaleString();
@@ -69,6 +87,29 @@ const ProductCard: React.FC<productsProps> = (props) => {
             ¥{price}
           </Typography>
         </div>
+        <IconButton onClick={handleClick} className={classes.menuButton}>
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}>
+          <Menuitem
+            onClick={() => {
+              dispatch(push("/product/edit/" + props.id));
+              handleClose();
+            }}>
+            編集する
+          </Menuitem>
+          <Menuitem
+            onClick={() => {
+              dispatch(deleteProduct(props.id));
+              handleClose();
+            }}>
+            削除する
+          </Menuitem>
+        </Menu>
       </CardContent>
     </Card>
   );

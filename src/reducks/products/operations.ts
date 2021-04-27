@@ -2,10 +2,28 @@ import { CallHistoryMethodAction, push } from "connected-react-router";
 import { Dispatch } from "react";
 import { db, FirebaseTimeStamp } from "../../firebase";
 import { FFD } from "../../firebase/types";
-import { fetchProductsAction } from "./actions";
+import { deleteProductsAction, fetchProductsAction } from "./actions";
 import { dataType } from "./type";
 
 const productsRef = db.collection("products");
+
+export const deleteProduct = (id: string) => {
+  return async (
+    dispatch: Dispatch<any>,
+    getState: () => { products: { list: FFD } }
+  ): Promise<void> => {
+    productsRef
+      .doc(id)
+      .delete()
+      .then(() => {
+        const prevProducts = getState().products.list;
+        const nextProducts = prevProducts.filter(
+          (product: { id: string }) => product.id !== id
+        );
+        dispatch(deleteProductsAction(nextProducts));
+      });
+  };
+};
 
 export const fetchProducts = () => {
   return async (
