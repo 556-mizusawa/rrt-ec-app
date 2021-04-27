@@ -5,8 +5,8 @@ import { PrimaryButton, SelectBox, TextInput } from "../components/UIkit";
 import { saveProduct } from "../reducks/products/operations";
 import { ImageArea, SetSizeArea } from "../components/Products";
 import { db } from "../firebase";
-import firebase from "firebase";
 import { makeStyles } from "@material-ui/core";
+import { FFD } from "../firebase/types";
 
 const useStyles = makeStyles({
   divider: {
@@ -76,7 +76,7 @@ const ProductEdit: React.FC = () => {
       db.collection("products")
         .doc(id)
         .get()
-        .then((snapshot: firebase.firestore.DocumentData) => {
+        .then((snapshot: FFD) => {
           const data = snapshot.data();
           setImages(data.images);
           setName(data.name);

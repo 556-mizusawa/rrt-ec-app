@@ -1,9 +1,32 @@
 import { CallHistoryMethodAction, push } from "connected-react-router";
 import { Dispatch } from "react";
 import { db, FirebaseTimeStamp } from "../../firebase";
+import { FFD } from "../../firebase/types";
+import { fetchProductsAction } from "./actions";
 import { dataType } from "./type";
 
 const productsRef = db.collection("products");
+
+export const fetchProducts = () => {
+  return async (
+    dispatch: Dispatch<{
+      type: string;
+      payload: FFD;
+    }>
+  ): Promise<void> => {
+    productsRef
+      .orderBy("updated_at", "desc")
+      .get()
+      .then((snapshots) => {
+        const productList: FFD = [];
+        snapshots.forEach((snapshot) => {
+          const product: FFD = snapshot.data();
+          productList.push(product);
+        });
+        dispatch(fetchProductsAction(productList));
+      });
+  };
+};
 
 export const saveProduct = (
   id: string,

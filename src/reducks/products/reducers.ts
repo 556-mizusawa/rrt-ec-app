@@ -4,7 +4,9 @@ import initialState from "../store/initialState";
 export const ProductsReducer = (
   state = initialState.products,
   action: { type: "FETCH_PRODUCTS"; payload: [] }
-) => {
+): {
+  list: never[];
+} => {
   switch (action.type) {
     case Actions.FETCH_PRODUCTS:
       return {

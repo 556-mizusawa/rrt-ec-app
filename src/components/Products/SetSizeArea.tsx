@@ -13,7 +13,6 @@ import { TextInput } from "../UIkit";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import { setSizeProps } from "./type";
-import { Paper } from "@material-ui/core";
 
 const useStyles = makeStyles({
   inputSize: {

@@ -1,3 +1,5 @@
+import { FFD } from "../../firebase/types";
+
 export type dataType = {
   category: string;
   description: string;
@@ -9,4 +11,9 @@ export type dataType = {
   updated_at: any;
   id?: string;
   created_at?: any;
+};
+
+export type productActionType = {
+  type: "FETCH_PRODUCTS";
+  payload: FFD;
 };
