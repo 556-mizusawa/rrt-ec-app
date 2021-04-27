@@ -1,3 +1,5 @@
+import { FFD } from "../../firebase/types";
+
 export type imageAreaProps = {
   images: [];
   setImages: (value: any) => void;
@@ -8,6 +10,16 @@ export type imagesProps = {
   id: string;
   path: string;
   key: string;
+};
+
+export type productsProps = {
+  key: string;
+  id: string;
+  name: string;
+  price: string;
+  images: {
+    path: string;
+  }[];
 };
 
 export type setSizeProps = {
