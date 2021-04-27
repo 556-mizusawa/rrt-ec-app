@@ -15,5 +15,5 @@ export type dataType = {
 
 export type productActionType = {
   type: "FETCH_PRODUCTS" | "DELETE_PRODUCT";
-  payload: any;
+  payload: [] | FFD;
 };

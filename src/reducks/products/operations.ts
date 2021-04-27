@@ -3,13 +3,13 @@ import { Dispatch } from "react";
 import { db, FirebaseTimeStamp } from "../../firebase";
 import { FFD } from "../../firebase/types";
 import { deleteProductsAction, fetchProductsAction } from "./actions";
-import { dataType } from "./type";
+import { dataType, productActionType } from "./type";
 
 const productsRef = db.collection("products");
 
 export const deleteProduct = (id: string) => {
   return async (
-    dispatch: Dispatch<any>,
+    dispatch: (arg0: productActionType) => void,
     getState: () => { products: { list: FFD } }
   ): Promise<void> => {
     productsRef
