@@ -1,5 +1,3 @@
-import { FFD } from "../../firebase/types";
-
 export type imageAreaProps = {
   images: [];
   setImages: (value: any) => void;

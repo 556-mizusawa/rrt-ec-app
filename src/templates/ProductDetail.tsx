@@ -6,6 +6,7 @@ import { FFD } from "../firebase/types";
 import { makeStyles, Theme } from "@material-ui/core";
 import { returnCodeToBr } from "../function/common";
 import { productDetail } from "./types";
+import { ImageSwiper, SizeTable } from "../components/Products/index";
 
 const useStyles = makeStyles((theme: Theme) => ({
   sliderBox: {
@@ -61,12 +62,16 @@ const ProductDetail: React.FC = () => {
     <section className="c-section-wrapin">
       {product && (
         <div className="p-grid__row">
-          <div className={classes.sliderBox}></div>
+          <div className={classes.sliderBox}>
+            <ImageSwiper images={product.images} />
+          </div>
           <div className={classes.detail}>
             <h2 className="u-text__headline">{product.name}</h2>
             <p className={classes.price}>{product.price.toLocaleString()}</p>
 
             <div className="module-spacer--small" />
+
+            <SizeTable sizes={product.sizes} />
 
             <div className="module-spacer--small" />
 
