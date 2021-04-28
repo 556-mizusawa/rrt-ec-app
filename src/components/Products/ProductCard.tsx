@@ -54,9 +54,9 @@ const ProductCard: React.FC<productsProps> = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [anchorEl, setAnchorEl] = useState<null | undefined>(null);
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
 
-  const handleClick = (event: { currentTarget: any }) => {
+  const handleClick = (event: { currentTarget: Element }) => {
     setAnchorEl(event.currentTarget);
   };
 
