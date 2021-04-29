@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import logo from "../../assets/img/icons/logo.png";
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIsSignedIn } from "../../reducks/users/selectors";
 import { initialStateUsersType } from "../../reducks/store/type";
 import { push } from "connected-react-router";
+import { HeaderMenus } from "./index";
 
 const useStyles = makeStyles({
   root: {
@@ -44,6 +45,11 @@ const Header: React.FC = () => {
             width="128px"
             onClick={() => dispatch(push("/"))}
           />
+          {isSignedIn && (
+            <div className={classes.iconButtons}>
+              <HeaderMenus />
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </div>
