@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -12,6 +12,9 @@ import HistoryIcon from "@material-ui/icons/History";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { TextInput } from "../UIkit/index";
+import { useDispatch } from "react-redux";
+import { push } from "connected-react-router";
+import { RME } from "./type";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,19 +26,25 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
-      width: 256,
+      width: 400,
     },
     searchField: {
       alignItems: "center",
       display: "flex",
       marginLeft: 32,
+      width: 300,
     },
   })
 );
 
-const ClosableDrawer: React.FC<any> = (props) => {
+const ClosableDrawer: React.FC<{
+  open: boolean;
+  onClose: (event: RME) => void;
+  container?: React.ReactInstance | (() => React.ReactInstance | null) | null;
+}> = (props) => {
   const classes = useStyles();
-  const { conatainer } = props;
+  const { container } = props;
+  const dispatch = useDispatch();
 
   const [keyword, setKeyword] = useState<string>("");
 
@@ -46,20 +55,49 @@ const ClosableDrawer: React.FC<any> = (props) => {
     [setKeyword]
   );
 
+  const selectMenu = (event: RME, path: string) => {
+    dispatch(push(path));
+    props.onClose(event);
+  };
+
+  const menus = [
+    {
+      func: selectMenu,
+      label: "商品登録",
+      icon: <AddCirecleIcon />,
+      id: "register",
+      value: "/product/edit",
+    },
+    {
+      func: selectMenu,
+      label: "注文履歴",
+      icon: <HistoryIcon />,
+      id: "history",
+      value: "/order/history",
+    },
+    {
+      func: selectMenu,
+      label: "プロフィール",
+      icon: <PersonIcon />,
+      id: "profile",
+      value: "/user/mypage",
+    },
+  ];
+
   return (
     <nav className={classes.drawer}>
       <Drawer
-        container={conatainer}
+        container={container}
         variant="temporary"
         anchor="right"
         open={props.open}
-        onClose={(e) => props.onClose(e)}
+        onClose={(e: RME) => props.onClose(e)}
         classes={{ paper: classes.drawerPaper }}
         ModalProps={{ keepMounted: true }}>
         <div>
           <div className={classes.searchField}>
             <TextInput
-              fullWidth={false}
+              fullWidth={true}
               label={"キーワードを入力"}
               multiline={false}
               onChange={inputKeyword}
@@ -74,6 +112,17 @@ const ClosableDrawer: React.FC<any> = (props) => {
           </div>
           <Divider />
           <List>
+            {menus.map((menu) => (
+              <ListItem
+                button
+                key={menu.id}
+                onClick={(e) => {
+                  menu.func(e, menu.value);
+                }}>
+                <ListItemIcon>{menu.icon}</ListItemIcon>
+                <ListItemText primary={menu.label} />
+              </ListItem>
+            ))}
             <ListItem button key="logout">
               <ListItemIcon>
                 <ExitToAppIcon />

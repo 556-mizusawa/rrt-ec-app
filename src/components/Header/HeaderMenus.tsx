@@ -5,7 +5,11 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import MenuIcon from "@material-ui/icons/Menu";
 
-const HeaderMenus: React.FC = () => {
+const HeaderMenus: React.FC<{
+  handleDrawerToggle: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
+}> = (props) => {
   return (
     <>
       <IconButtons>
@@ -16,7 +20,7 @@ const HeaderMenus: React.FC = () => {
       <IconButtons>
         <FavoriteBorderIcon />
       </IconButtons>
-      <IconButtons>
+      <IconButtons onClick={(event) => props.handleDrawerToggle(event)}>
         <MenuIcon />
       </IconButtons>
     </>
