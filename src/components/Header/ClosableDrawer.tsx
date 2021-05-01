@@ -15,6 +15,7 @@ import { TextInput } from "../UIkit/index";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 import { RME } from "./type";
+import { signOut } from "../../reducks/users/operations";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -123,7 +124,7 @@ const ClosableDrawer: React.FC<{
                 <ListItemText primary={menu.label} />
               </ListItem>
             ))}
-            <ListItem button key="logout">
+            <ListItem button key="logout" onClick={() => dispatch(signOut())}>
               <ListItemIcon>
                 <ExitToAppIcon />
               </ListItemIcon>
