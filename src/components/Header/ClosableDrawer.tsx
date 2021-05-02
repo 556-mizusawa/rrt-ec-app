@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const ClosableDrawer: React.FC<{
   open: boolean;
   onClose: (event: RME) => void;
-  container?: React.ReactInstance | (() => React.ReactInstance | null) | null;
+  container?: React.ReactInstance | null;
 }> = (props) => {
   const classes = useStyles();
   const { container } = props;
