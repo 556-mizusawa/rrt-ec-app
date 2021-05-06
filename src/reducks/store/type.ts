@@ -23,6 +23,7 @@ export type CreateStore = (
 >;
 
 export type initialStateUsersType = {
+  cart: [];
   isSignedIn: boolean;
   role: string;
   uid: string;

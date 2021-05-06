@@ -2,18 +2,22 @@ import * as Actions from "./actions";
 import initialState from "../store/initialState";
 import { initialStateUsersType } from "../store/type";
 
-export const UsersReducer: (
-  state: initialStateUsersType | undefined,
-  action: {
-    type: "SIGN_IN" | "SIGN_OUT";
-    payload: initialStateUsersType;
-  }
-) => {
-  isSignedIn: boolean;
-  role: string;
-  uid: string;
-  username: string;
-} = (
+// : (
+//   state: initialStateUsersType | undefined,
+//   action: {
+//     type: "SIGN_IN" | "SIGN_OUT";
+//     payload: initialStateUsersType;
+//   }
+// ) => {
+//   cart: [];
+//   isSignedIn: boolean;
+//   role: string;
+//   uid: string;
+//   username: string;
+// }
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const UsersReducer = (
   state = initialState.users,
   action: { type: "SIGN_IN" | "SIGN_OUT"; payload: initialStateUsersType }
 ) => {
