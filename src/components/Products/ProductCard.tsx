@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   content: {
     display: "flex",
+    justifyContent: "space-between",
     padding: "16px 8px",
     textAlign: "left",
     "&:last-child": {
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: 16,
   },
   menuButton: {
-    marginLeft: 150,
+    marginRight: 110,
   },
 }));
 
@@ -87,7 +88,7 @@ const ProductCard: React.FC<productsProps> = (props) => {
             ¥{price}
           </Typography>
         </div>
-        <IconButton onClick={handleClick} className={classes.menuButton}>
+        <IconButton onClick={handleClick}>
           <MoreVertIcon />
         </IconButton>
         <Menu
