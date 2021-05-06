@@ -1,4 +1,4 @@
-import { signInAction, signOutAction } from "./actions";
+import { fetchProductsInCartAction, signInAction, signOutAction } from "./actions";
 import { push } from "connected-react-router";
 import {
   isValidEmailFormat,
@@ -10,6 +10,7 @@ import firebase from "firebase";
 import { auth, db, FirebaseTimeStamp } from "../../firebase/index";
 import { userOpDispatch } from "./type";
 import { FFD } from "../../firebase/types";
+import { Dispatch } from "react";
 
 export const addProductToCart = (addedProduct: FFD) => {
   return async (
@@ -21,6 +22,17 @@ export const addProductToCart = (addedProduct: FFD) => {
     addedProduct["cartId"] = cartRef.id;
     await cartRef.set(addedProduct);
     dispatch(push("/"));
+  };
+};
+
+export const fetchProductsInCart = (products: FFD) => {
+  return async (
+    dispatch: Dispatch<{
+      type: string;
+      payload: FFD;
+    }>
+  ): Promise<void> => {
+    dispatch(fetchProductsInCartAction(products));
   };
 };
 
@@ -62,15 +74,11 @@ export const resetPassword = (email: string) => {
       auth
         .sendPasswordResetEmail(email)
         .then(() => {
-          alert(
-            "入力されたアドレスにパスワードリセット用のメールをお送りしました。"
-          );
+          alert("入力されたアドレスにパスワードリセット用のメールをお送りしました。");
           dispatch(push("./signin"));
         })
         .catch(() => {
-          alert(
-            "パスワードリセットに失敗しました。通信環境をご確認の上再度お試し下さい。"
-          );
+          alert("パスワードリセットに失敗しました。通信環境をご確認の上再度お試し下さい。");
         });
     }
   };
@@ -155,32 +163,30 @@ export const signUp: (
       return false;
     }
 
-    return auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        const user = result.user;
+    return auth.createUserWithEmailAndPassword(email, password).then((result) => {
+      const user = result.user;
 
-        if (user) {
-          const uid = user.uid;
-          const timestamp = FirebaseTimeStamp.now();
+      if (user) {
+        const uid = user.uid;
+        const timestamp = FirebaseTimeStamp.now();
 
-          const userInitialData = {
-            created_at: timestamp,
-            email: email,
-            role: "customer",
-            uid: "uid",
-            updated_at: timestamp,
-            username: username,
-          };
+        const userInitialData = {
+          created_at: timestamp,
+          email: email,
+          role: "customer",
+          uid: "uid",
+          updated_at: timestamp,
+          username: username,
+        };
 
-          db.collection("users")
-            .doc(uid)
-            .set(userInitialData)
-            .then(() => {
-              dispatch(push("/"));
-            });
-        }
-      });
+        db.collection("users")
+          .doc(uid)
+          .set(userInitialData)
+          .then(() => {
+            dispatch(push("/"));
+          });
+      }
+    });
   };
 };
 

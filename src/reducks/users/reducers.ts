@@ -19,9 +19,18 @@ import { initialStateUsersType } from "../store/type";
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const UsersReducer = (
   state = initialState.users,
-  action: { type: "SIGN_IN" | "SIGN_OUT"; payload: initialStateUsersType }
+  action: {
+    type: "SIGN_IN" | "SIGN_OUT" | "FETCH_PRODUCTS_IN_CART";
+    payload: initialStateUsersType | any;
+  }
 ) => {
   switch (action.type) {
+    case Actions.FETCH_PRODUCTS_IN_CART:
+      return {
+        ...state,
+        cart: [...action.payload],
+      };
+
     case Actions.SIGN_IN:
       return {
         ...state,

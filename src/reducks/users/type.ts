@@ -1,9 +1,10 @@
 import { CallHistoryMethodAction } from "connected-react-router";
 import { Dispatch } from "react";
+import { FFD } from "../../firebase/types";
 import { loadingActionType } from "../loading/type";
 
 export type userActionType = {
-  type: string;
+  type: "SIGN_IN" | "SIGN_OUT";
   payload: {
     isSignedIn: boolean;
     role: string;
@@ -12,8 +13,11 @@ export type userActionType = {
   };
 };
 
+export type userFetchProductActionType = {
+  type: "FETCH_PRODUCTS_IN_CART";
+  payload: FFD;
+};
+
 export type userOpDispatch = Dispatch<
-  | userActionType
-  | loadingActionType
-  | CallHistoryMethodAction<[string, unknown?]>
+  userActionType | loadingActionType | CallHistoryMethodAction<[string, unknown?]>
 >;
