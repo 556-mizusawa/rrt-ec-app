@@ -100,6 +100,7 @@ const SignIn: React.FC = () => {
       <div className="module-spacer--medium" />
       <div className="center">
         <PrimaryButton
+          color={"primary"}
           label={"ログイン"}
           onClick={() => dispatch(signIn(email, password))}
         />

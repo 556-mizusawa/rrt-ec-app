@@ -20,10 +20,10 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = (
 
   return (
     <Button
-      className={classes.button}
+      className={props.className || classes.button}
       variant={"contained"}
       onClick={() => props.onClick()}
-      color="primary">
+      color={props.color}>
       {props.label}
     </Button>
   );

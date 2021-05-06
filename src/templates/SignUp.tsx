@@ -119,8 +119,7 @@ const SignUp: React.FC = () => {
               <IconButton
                 aria-label="toggle password visibility"
                 onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-              >
+                onMouseDown={handleMouseDownPassword}>
                 {showPassword ? <Visibility /> : <VisibilityOff />}
               </IconButton>
             </InputAdornment>
@@ -137,6 +136,7 @@ const SignUp: React.FC = () => {
       <div className="module-spacer--medium" />
       <div className="center">
         <PrimaryButton
+          color={"primary"}
           label={"アカウントを登録する"}
           onClick={() =>
             dispatch(signUp(username, email, password, confirmPassword))

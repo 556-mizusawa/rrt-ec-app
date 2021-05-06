@@ -16,6 +16,13 @@ const useStyles = makeStyles({
     height: "auto",
     width: "calc(100% - 2rem)",
   },
+  button: {
+    color: "#fff",
+    fontSize: 16,
+    height: 48,
+    marginBottom: 16,
+    width: 256,
+  },
 });
 
 const ProductEdit: React.FC = () => {
@@ -153,6 +160,7 @@ const ProductEdit: React.FC = () => {
 
         <div className="center">
           <PrimaryButton
+            color={"primary"}
             label={"商品情報を保存"}
             onClick={() =>
               dispatch(

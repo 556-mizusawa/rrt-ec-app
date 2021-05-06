@@ -55,6 +55,7 @@ const Reset: React.FC = () => {
 
       <div className="center">
         <PrimaryButton
+          color={"secondary"}
           label={"パスワードをリセット"}
           onClick={() => dispatch(resetPassword(email))}
         />

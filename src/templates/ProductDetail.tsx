@@ -8,6 +8,9 @@ import { returnCodeToBr } from "../function/common";
 import { productDetail } from "./types";
 import { ImageSwiper, SizeTable } from "../components/Products/index";
 import { addProductToCart } from "../reducks/users/operations";
+import { deleteProduct } from "../reducks/products/operations";
+import { push } from "connected-react-router";
+import { PrimaryButton } from "../components/UIkit/index";
 
 const useStyles = makeStyles((theme: Theme) => ({
   sliderBox: {
@@ -37,6 +40,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   price: {
     fontSize: 36,
+  },
+  span: {
+    fontSize: 15,
+  },
+  button: {
+    color: "#fff",
+    fontSize: 16,
+    height: 48,
+    marginRight: 15,
+    width: 144,
   },
 }));
 
@@ -89,11 +102,36 @@ const ProductDetail: React.FC = () => {
           </div>
           <div className={classes.detail}>
             <h2 className="u-text__headline">{product.name}</h2>
-            <p className={classes.price}>{product.price.toLocaleString()}</p>
+            <p className={classes.price}>
+              ¥{product.price.toLocaleString()}
+              <span className={classes.span}>(税込)</span>
+            </p>
 
             <div className="module-spacer--small" />
 
             <SizeTable addProduct={addProduct} sizes={product.sizes} />
+
+            <div className="module-spacer--small" />
+
+            <div>
+              <PrimaryButton
+                className={classes.button}
+                color={"primary"}
+                onClick={() => {
+                  dispatch(push("/product/edit/" + id));
+                }}
+                label={"編集"}
+              />
+              <PrimaryButton
+                className={classes.button}
+                color={"secondary"}
+                onClick={() => {
+                  dispatch(deleteProduct(id));
+                  dispatch(push("/"));
+                }}
+                label={"削除"}
+              />
+            </div>
 
             <div className="module-spacer--small" />
 
