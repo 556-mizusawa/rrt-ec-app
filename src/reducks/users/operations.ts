@@ -11,6 +11,19 @@ import { auth, db, FirebaseTimeStamp } from "../../firebase/index";
 import { userOpDispatch } from "./type";
 import { FFD } from "../../firebase/types";
 
+export const addProductToCart = (addedProduct: FFD) => {
+  return async (
+    dispatch: userOpDispatch,
+    getState: () => { users: { uid: string } }
+  ): Promise<void> => {
+    const uid = getState().users.uid;
+    const cartRef = db.collection("users").doc(uid).collection("cart").doc();
+    addedProduct["cartId"] = cartRef.id;
+    await cartRef.set(addedProduct);
+    dispatch(push("/"));
+  };
+};
+
 export const listenAuthState = () => {
   return async (dispatch: userOpDispatch): Promise<firebase.Unsubscribe> => {
     return auth.onAuthStateChanged((user) => {

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { History } from "history";
-import { useSelector } from "react-redux";
-import { db } from "../firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { db, FirebaseTimeStamp } from "../firebase";
 import { FFD } from "../firebase/types";
 import { makeStyles, Theme } from "@material-ui/core";
 import { returnCodeToBr } from "../function/common";
 import { productDetail } from "./types";
 import { ImageSwiper, SizeTable } from "../components/Products/index";
+import { addProductToCart } from "../reducks/users/operations";
 
 const useStyles = makeStyles((theme: Theme) => ({
   sliderBox: {
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const ProductDetail: React.FC = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const selector = useSelector((state: { router: History }) => state);
   const path = selector.router.location.pathname;
@@ -58,6 +60,26 @@ const ProductDetail: React.FC = () => {
       });
   }, [id]);
 
+  const addProduct = useCallback(
+    (selectedSize: string) => {
+      const timestamp = FirebaseTimeStamp.now();
+      dispatch(
+        addProductToCart({
+          added_at: timestamp,
+          description: product?.description,
+          gender: product?.gender,
+          images: product?.images,
+          name: product?.name,
+          price: product?.price,
+          productId: product?.id,
+          quantity: 1,
+          size: selectedSize,
+        })
+      );
+    },
+    [product, dispatch]
+  );
+
   return (
     <section className="c-section-wrapin">
       {product && (
@@ -71,7 +93,7 @@ const ProductDetail: React.FC = () => {
 
             <div className="module-spacer--small" />
 
-            <SizeTable sizes={product.sizes} />
+            <SizeTable addProduct={addProduct} sizes={product.sizes} />
 
             <div className="module-spacer--small" />
 
