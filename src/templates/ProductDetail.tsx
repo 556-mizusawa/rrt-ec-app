@@ -7,7 +7,10 @@ import { makeStyles, Theme } from "@material-ui/core";
 import { returnCodeToBr } from "../function/common";
 import { productDetail } from "./types";
 import { ImageSwiper, SizeTable } from "../components/Products/index";
-import { addProductToCart } from "../reducks/users/operations";
+import {
+  addProductToCart,
+  addProductToFavorite,
+} from "../reducks/users/operations";
 import { deleteProduct } from "../reducks/products/operations";
 import { push } from "connected-react-router";
 import { PrimaryButton } from "../components/UIkit/index";
@@ -93,6 +96,26 @@ const ProductDetail: React.FC = () => {
     [product, dispatch]
   );
 
+  const addFavorite = useCallback(
+    (selectedSize: string) => {
+      const timestamp = FirebaseTimeStamp.now();
+      dispatch(
+        addProductToFavorite({
+          added_at: timestamp,
+          description: product?.description,
+          gender: product?.gender,
+          images: product?.images,
+          name: product?.name,
+          price: product?.price,
+          productId: product?.id,
+          quantity: 1,
+          size: selectedSize,
+        })
+      );
+    },
+    [product, dispatch]
+  );
+
   return (
     <section className="c-section-wrapin">
       {product && (
@@ -109,7 +132,11 @@ const ProductDetail: React.FC = () => {
 
             <div className="module-spacer--small" />
 
-            <SizeTable addProduct={addProduct} sizes={product.sizes} />
+            <SizeTable
+              addProduct={addProduct}
+              addFavorite={addFavorite}
+              sizes={product.sizes}
+            />
 
             <div className="module-spacer--small" />
 

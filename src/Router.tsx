@@ -8,6 +8,7 @@ import {
   SignUp,
   Reset,
   CartList,
+  FavoriteList,
 } from "./templates";
 import Auth from "./Auth";
 
@@ -24,6 +25,7 @@ const Router: React.FC = () => {
         <Route path="/product/edit(/:id)?" component={ProductEdit} />
 
         <Route exact path="/cart" component={CartList} />
+        <Route exact path="/favorite" component={FavoriteList} />
       </Auth>
     </Switch>
   );

@@ -43,7 +43,6 @@ export const addProductToFavorite = (keepProduct: FFD) => {
       .doc();
     keepProduct["favoriteId"] = favoriteRef.id;
     await favoriteRef.set(keepProduct);
-    dispatch(push("/"));
   };
 };
 
