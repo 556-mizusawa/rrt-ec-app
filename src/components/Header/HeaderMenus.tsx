@@ -10,12 +10,17 @@ import { initialStateUsersType } from "../../reducks/store/type";
 import { db } from "../../firebase/index";
 import { FFD } from "../../firebase/types";
 import { fetchProductsInCart } from "../../reducks/users/operations";
+import { push } from "connected-react-router";
 
 const HeaderMenus: React.FC<{
-  handleDrawerToggle: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  handleDrawerToggle: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
 }> = (props) => {
   const dispatch = useDispatch();
-  const selector = useSelector((state: { users: initialStateUsersType }) => state);
+  const selector = useSelector(
+    (state: { users: initialStateUsersType }) => state
+  );
   const uid = getUserId(selector);
   let productsInCart: FFD = getProductsInCart(selector);
 
@@ -36,14 +41,16 @@ const HeaderMenus: React.FC<{
             case "modified":
               // eslint-disable-next-line no-case-declarations
               const index = productsInCart.findIndex(
-                (product: { cartId: string }) => product.cartId === change.doc.id
+                (product: { cartId: string }) =>
+                  product.cartId === change.doc.id
               );
               productsInCart[index] = product;
               break;
             case "removed":
               // eslint-disable-next-line react-hooks/exhaustive-deps
               productsInCart = productsInCart.filter(
-                (product: { cartId: string }) => product.cartId !== change.doc.id
+                (product: { cartId: string }) =>
+                  product.cartId !== change.doc.id
               );
               break;
             default:
@@ -59,7 +66,7 @@ const HeaderMenus: React.FC<{
 
   return (
     <>
-      <IconButtons>
+      <IconButtons onClick={() => dispatch(push("/cart"))}>
         <Badge badgeContent={productsInCart.length} color="secondary">
           <ShoppingCartIcon />
         </Badge>

@@ -104,7 +104,7 @@ const ProductDetail: React.FC = () => {
             <h2 className="u-text__headline">{product.name}</h2>
             <p className={classes.price}>
               ¥{product.price.toLocaleString()}
-              <span className={classes.span}>(税込)</span>
+              <span className={classes.span}>(税別)</span>
             </p>
 
             <div className="module-spacer--small" />
