@@ -9,7 +9,7 @@ export type PrimaryButtonProps = {
   className?: string;
   onClick: () => void;
   label?: string;
-  color: "inherit" | "primary" | "secondary" | "default" | undefined;
+  color?: "inherit" | "primary" | "secondary" | "default" | undefined;
 };
 
 export type TextInputProps = {

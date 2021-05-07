@@ -1,4 +1,8 @@
-import { fetchProductsInCartAction, signInAction, signOutAction } from "./actions";
+import {
+  fetchProductsInCartAction,
+  signInAction,
+  signOutAction,
+} from "./actions";
 import { push } from "connected-react-router";
 import {
   isValidEmailFormat,
@@ -50,7 +54,6 @@ export const listenAuthState = () => {
 
             dispatch(
               signInAction({
-                cart: [],
                 isSignedIn: true,
                 role: data.role,
                 uid: uid,
@@ -74,11 +77,15 @@ export const resetPassword = (email: string) => {
       auth
         .sendPasswordResetEmail(email)
         .then(() => {
-          alert("入力されたアドレスにパスワードリセット用のメールをお送りしました。");
+          alert(
+            "入力されたアドレスにパスワードリセット用のメールをお送りしました。"
+          );
           dispatch(push("./signin"));
         })
         .catch(() => {
-          alert("パスワードリセットに失敗しました。通信環境をご確認の上再度お試し下さい。");
+          alert(
+            "パスワードリセットに失敗しました。通信環境をご確認の上再度お試し下さい。"
+          );
         });
     }
   };
@@ -112,7 +119,6 @@ export const signIn = (email: string, password: string) => {
 
             dispatch(
               signInAction({
-                cart: [],
                 isSignedIn: true,
                 role: data.role,
                 uid: uid,
@@ -163,30 +169,32 @@ export const signUp: (
       return false;
     }
 
-    return auth.createUserWithEmailAndPassword(email, password).then((result) => {
-      const user = result.user;
+    return auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        const user = result.user;
 
-      if (user) {
-        const uid = user.uid;
-        const timestamp = FirebaseTimeStamp.now();
+        if (user) {
+          const uid = user.uid;
+          const timestamp = FirebaseTimeStamp.now();
 
-        const userInitialData = {
-          created_at: timestamp,
-          email: email,
-          role: "customer",
-          uid: "uid",
-          updated_at: timestamp,
-          username: username,
-        };
+          const userInitialData = {
+            created_at: timestamp,
+            email: email,
+            role: "customer",
+            uid: "uid",
+            updated_at: timestamp,
+            username: username,
+          };
 
-        db.collection("users")
-          .doc(uid)
-          .set(userInitialData)
-          .then(() => {
-            dispatch(push("/"));
-          });
-      }
-    });
+          db.collection("users")
+            .doc(uid)
+            .set(userInitialData)
+            .then(() => {
+              dispatch(push("/"));
+            });
+        }
+      });
   };
 };
 
