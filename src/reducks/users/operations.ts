@@ -1,5 +1,6 @@
 import {
   fetchProductsInCartAction,
+  fetchProductsInFavoriteAction,
   signInAction,
   signOutAction,
 } from "./actions";
@@ -25,6 +26,23 @@ export const addProductToCart = (addedProduct: FFD) => {
     const cartRef = db.collection("users").doc(uid).collection("cart").doc();
     addedProduct["cartId"] = cartRef.id;
     await cartRef.set(addedProduct);
+    dispatch(push("/cart"));
+  };
+};
+
+export const addProductToFavorite = (keepProduct: FFD) => {
+  return async (
+    dispatch: userOpDispatch,
+    getState: () => { users: { uid: string } }
+  ): Promise<void> => {
+    const uid = getState().users.uid;
+    const favoriteRef = db
+      .collection("users")
+      .doc(uid)
+      .collection("favorite")
+      .doc();
+    keepProduct["favoriteId"] = favoriteRef.id;
+    await favoriteRef.set(keepProduct);
     dispatch(push("/"));
   };
 };
@@ -37,6 +55,17 @@ export const fetchProductsInCart = (products: FFD) => {
     }>
   ): Promise<void> => {
     dispatch(fetchProductsInCartAction(products));
+  };
+};
+
+export const fetchProductsInFavorite = (products: FFD) => {
+  return async (
+    dispatch: Dispatch<{
+      type: string;
+      payload: FFD;
+    }>
+  ): Promise<void> => {
+    dispatch(fetchProductsInFavoriteAction(products));
   };
 };
 

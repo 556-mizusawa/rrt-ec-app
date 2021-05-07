@@ -4,12 +4,19 @@ import Badge from "@material-ui/core/Badge";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import MenuIcon from "@material-ui/icons/Menu";
-import { getProductsInCart, getUserId } from "../../reducks/users/selectors";
+import {
+  getProductsInCart,
+  getProductsInFavorite,
+  getUserId,
+} from "../../reducks/users/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { initialStateUsersType } from "../../reducks/store/type";
 import { db } from "../../firebase/index";
 import { FFD } from "../../firebase/types";
-import { fetchProductsInCart } from "../../reducks/users/operations";
+import {
+  fetchProductsInCart,
+  fetchProductsInFavorite,
+} from "../../reducks/users/operations";
 import { push } from "connected-react-router";
 
 const HeaderMenus: React.FC<{
@@ -64,6 +71,48 @@ const HeaderMenus: React.FC<{
     return () => unsubscribe();
   }, []);
 
+  let productsInFavorite: FFD = getProductsInFavorite(selector);
+
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("users")
+      .doc(uid)
+      .collection("favorite")
+      .onSnapshot((snapshots) => {
+        snapshots.docChanges().forEach((change) => {
+          const product = change.doc.data();
+          const changeType = change.type;
+
+          switch (changeType) {
+            case "added":
+              productsInFavorite.push(product);
+              break;
+            case "modified":
+              // eslint-disable-next-line no-case-declarations
+              const index = productsInFavorite.findIndex(
+                (product: { favoriteId: string }) =>
+                  product.favoriteId === change.doc.id
+              );
+              productsInFavorite[index] = product;
+              break;
+            case "removed":
+              // eslint-disable-next-line react-hooks/exhaustive-deps
+              productsInFavorite = productsInFavorite.filter(
+                (product: { favoriteId: string }) =>
+                  product.favoriteId !== change.doc.id
+              );
+              break;
+            default:
+              break;
+          }
+        });
+
+        dispatch(fetchProductsInFavorite(productsInFavorite));
+      });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <>
       <IconButtons onClick={() => dispatch(push("/cart"))}>
@@ -71,8 +120,10 @@ const HeaderMenus: React.FC<{
           <ShoppingCartIcon />
         </Badge>
       </IconButtons>
-      <IconButtons>
-        <FavoriteBorderIcon />
+      <IconButtons onClick={() => dispatch(push("/favorite"))}>
+        <Badge badgeContent={productsInFavorite.length} color="secondary">
+          <FavoriteBorderIcon />
+        </Badge>
       </IconButtons>
       <IconButtons onClick={(event) => props.handleDrawerToggle(event)}>
         <MenuIcon />

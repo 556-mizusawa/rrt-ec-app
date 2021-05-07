@@ -33,7 +33,10 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       display: "flex",
       marginLeft: 32,
-      width: 300,
+      width: 350,
+    },
+    searchIcon: {
+      marginTop: 16,
     },
   })
 );
@@ -107,7 +110,7 @@ const ClosableDrawer: React.FC<{
               value={keyword}
               type={"text"}
             />
-            <IconButton>
+            <IconButton className={classes.searchIcon}>
               <SerchIcon />
             </IconButton>
           </div>

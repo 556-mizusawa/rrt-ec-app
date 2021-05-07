@@ -55,6 +55,7 @@ const Header: React.FC = () => {
       <AppBar position="fixed" className={classes.menuBar}>
         <Toolbar className={classes.toolBar}>
           <img
+            className="u-pointer-set"
             src={logo}
             alt="logo"
             width="128px"

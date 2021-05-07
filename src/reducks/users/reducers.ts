@@ -20,7 +20,11 @@ import { initialStateUsersType } from "../store/type";
 export const UsersReducer = (
   state = initialState.users,
   action: {
-    type: "SIGN_IN" | "SIGN_OUT" | "FETCH_PRODUCTS_IN_CART";
+    type:
+      | "SIGN_IN"
+      | "SIGN_OUT"
+      | "FETCH_PRODUCTS_IN_CART"
+      | "FETCH_PRODUCTS_IN_FAVORITE";
     payload: initialStateUsersType | any;
   }
 ) => {
@@ -29,6 +33,12 @@ export const UsersReducer = (
       return {
         ...state,
         cart: [...action.payload],
+      };
+
+    case Actions.FETCH_PRODUCTS_IN_FAVORITE:
+      return {
+        ...state,
+        favorite: [...action.payload],
       };
 
     case Actions.SIGN_IN:

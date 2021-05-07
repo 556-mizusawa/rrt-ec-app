@@ -21,7 +21,7 @@ export type userSignInActionType = {
 };
 
 export type userFetchProductActionType = {
-  type: "FETCH_PRODUCTS_IN_CART";
+  type: "FETCH_PRODUCTS_IN_CART" | "FETCH_PRODUCTS_IN_FAVORITE";
   payload: FFD;
 };
 

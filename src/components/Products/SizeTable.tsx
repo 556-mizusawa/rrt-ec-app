@@ -19,6 +19,7 @@ const useStyles = makeStyles({
 
 const SizeTable: React.FC<{
   addProduct: (selectedSize: string) => void;
+  addFavorite: (selectedSize: string) => void;
   sizes: [];
 }> = (props) => {
   const classes = useStyles();
@@ -46,7 +47,7 @@ const SizeTable: React.FC<{
                   )}
                 </TableCell>
                 <TableCell className={classes.iconCell}>
-                  <IconButton>
+                  <IconButton onClick={() => props.addFavorite(size.size)}>
                     <FavoriteBorderIcon />
                   </IconButton>
                 </TableCell>
