@@ -16,7 +16,7 @@ const FavoriteList: React.FC = () => {
   );
   const productsInFavorite = getProductsInFavorite(selector);
   const dispatch = useDispatch();
-  const [product, setProduct] = useState<productDetail | null>(null);
+  const [product] = useState<productDetail | null>(null);
 
   const goToCart = useCallback(() => {
     dispatch(push("/cart"));
@@ -62,6 +62,7 @@ const FavoriteList: React.FC = () => {
       <div className="module-spacer--medium" />
       <div className="p-grid__column">
         {productsInFavorite.length > 0 && (
+          // カート追加仮実装
           <PrimaryButton
             label={"カートへ進む"}
             onClick={goToCart}

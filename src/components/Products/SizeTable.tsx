@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/styles";
 import ShopingCartIcon from "@material-ui/icons/ShoppingCart";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const useStyles = makeStyles({
   iconCell: {
@@ -23,8 +24,20 @@ const SizeTable: React.FC<{
   sizes: [];
 }> = (props) => {
   const classes = useStyles();
+  const [favorite, setFavorite] = useState<boolean>(false);
 
   const sizes = props.sizes;
+
+  const favoriteOn = (size: string) => {
+    props.addFavorite(size);
+    console.log("+");
+    setFavorite(true);
+  };
+
+  const favoriteOff = () => {
+    console.log("-");
+    setFavorite(false);
+  };
 
   return (
     <TableContainer>
@@ -46,10 +59,17 @@ const SizeTable: React.FC<{
                     <div>売り切れ</div>
                   )}
                 </TableCell>
+                {/* イイね仮実装 */}
                 <TableCell className={classes.iconCell}>
-                  <IconButton onClick={() => props.addFavorite(size.size)}>
-                    <FavoriteBorderIcon />
-                  </IconButton>
+                  {favorite === false ? (
+                    <IconButton onClick={() => favoriteOn(size.size)}>
+                      <FavoriteBorderIcon />
+                    </IconButton>
+                  ) : (
+                    <IconButton onClick={() => favoriteOff()}>
+                      <FavoriteIcon />
+                    </IconButton>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
