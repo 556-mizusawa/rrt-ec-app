@@ -29,7 +29,9 @@ const useStyles = makeStyles({
 
 const CartListItem: React.FC<{ product: FFD }> = (props) => {
   const classes = useStyles();
-  const selector = useSelector((state: { users: initialStateUsersType }) => state);
+  const selector = useSelector(
+    (state: { users: initialStateUsersType }) => state
+  );
   const uid = getUserId(selector);
 
   const image = props.product.images[0].path;

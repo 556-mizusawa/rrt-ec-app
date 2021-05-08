@@ -15,7 +15,7 @@ const CartList: React.FC = () => {
   const dispatch = useDispatch();
 
   const goToOrder = useCallback(() => {
-    dispatch(push("/order/confirm"));
+    dispatch(push("/order/comfirm"));
   }, [dispatch]);
 
   const backToHome = useCallback(() => {

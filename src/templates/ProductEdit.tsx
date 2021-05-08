@@ -69,7 +69,8 @@ const ProductEdit: React.FC = () => {
     { id: "jkt", name: "ジャケット" },
     { id: "shirts", name: "シャツ" },
     { id: "pants", name: "パンツ" },
-    { id: "シューズ", name: "シューズ" },
+    { id: "shoes", name: "シューズ" },
+    { id: "ather", name: "その他" },
   ];
 
   const genders = [

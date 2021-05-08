@@ -9,6 +9,7 @@ import {
   Reset,
   CartList,
   FavoriteList,
+  OrderComfirm,
 } from "./templates";
 import Auth from "./Auth";
 
@@ -26,6 +27,7 @@ const Router: React.FC = () => {
 
         <Route exact path="/cart" component={CartList} />
         <Route exact path="/favorite" component={FavoriteList} />
+        <Route exact path="/order/comfirm" component={OrderComfirm} />
       </Auth>
     </Switch>
   );
