@@ -7,6 +7,7 @@ import {
 
 export type PrimaryButtonProps = {
   className?: string;
+  disabled?: boolean;
   onClick: () => void;
   label?: string;
   color?: "inherit" | "primary" | "secondary" | "default" | undefined;

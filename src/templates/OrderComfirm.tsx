@@ -54,7 +54,7 @@ const OrderComfirm: React.FC = () => {
 
   const shippngFee = subtotal > 10000 ? 0 : 210;
   const tax = subtotal * 0.1;
-  const total = subtotal + shippngFee + tax;
+  const total = productsInCart.length > 0 ? subtotal + shippngFee + tax : 0;
 
   const backToHome = useCallback(() => {
     dispatch(push("/"));
@@ -89,7 +89,11 @@ const OrderComfirm: React.FC = () => {
           <TextDetail label={"消費税"} value={"¥" + tax.toLocaleString()} />
           <TextDetail
             label={"送料"}
-            value={"¥" + shippngFee.toLocaleString()}
+            value={
+              productsInCart.length > 0
+                ? "¥" + shippngFee.toLocaleString()
+                : "¥" + 0
+            }
           />
           <Divider />
 
@@ -103,8 +107,15 @@ const OrderComfirm: React.FC = () => {
 
           <div className="module-spacer--extra-small" />
 
-          {productsInCart.length > 0 && (
+          {productsInCart.length > 0 ? (
             <PrimaryButton
+              label={"購入する"}
+              onClick={order}
+              color={"primary"}
+            />
+          ) : (
+            <PrimaryButton
+              disabled={true}
               label={"購入する"}
               onClick={order}
               color={"primary"}

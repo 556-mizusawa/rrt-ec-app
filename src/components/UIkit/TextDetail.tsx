@@ -18,7 +18,9 @@ const useStyles = makeStyles({
   },
 });
 
-const TextDetail: React.FC<{ label: string; value: string }> = (props) => {
+const TextDetail: React.FC<{ label: string; value: string | number }> = (
+  props
+) => {
   const classes = useStyles();
 
   return (

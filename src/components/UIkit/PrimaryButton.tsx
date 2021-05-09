@@ -21,6 +21,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = (
   return (
     <Button
       className={props.className || classes.button}
+      disabled={props.disabled}
       variant={"contained"}
       onClick={() => props.onClick()}
       color={props.color}>
