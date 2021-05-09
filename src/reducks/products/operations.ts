@@ -134,7 +134,7 @@ export const orderProduct = (productsInCart: any, amount: number) => {
           dispatch(push("/order/complete"));
         })
         .catch(() => {
-          alert("注文処理に失敗しました。");
+          dispatch(push("/order/reset"));
           return false;
         });
     }

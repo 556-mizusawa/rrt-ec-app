@@ -10,6 +10,7 @@ import {
   CartList,
   FavoriteList,
   OrderComfirm,
+  OrderReset,
 } from "./templates";
 import Auth from "./Auth";
 
@@ -28,6 +29,7 @@ const Router: React.FC = () => {
         <Route exact path="/cart" component={CartList} />
         <Route exact path="/favorite" component={FavoriteList} />
         <Route exact path="/order/comfirm" component={OrderComfirm} />
+        <Route exact path="/order/reset" component={OrderReset} />
       </Auth>
     </Switch>
   );
