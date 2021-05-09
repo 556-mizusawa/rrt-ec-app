@@ -8,6 +8,8 @@ import { GreenButton, PrimaryButton, TextDetail } from "../components/UIkit";
 import { Theme, makeStyles, createStyles } from "@material-ui/core";
 import { initialStateUsersType } from "../reducks/store/type";
 import { push } from "connected-react-router";
+import { orderProduct } from "../reducks/products/operations";
+import { FFD } from "../firebase/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       border: "1px solid rgba(0,0,0,0.2)",
       borderRadius: 4,
       boxShadow: "0 4px 2px 2px rgba(0,0,0,0.2)",
-      height: 256,
+      height: 356,
       margin: "24px auto 16px auto",
       padding: 16,
       width: 288,
@@ -41,7 +43,7 @@ const OrderComfirm: React.FC = () => {
   const selector = useSelector(
     (state: { users: initialStateUsersType }) => state
   );
-  const productsInCart = getProductsInCart(selector);
+  const productsInCart: FFD = getProductsInCart(selector);
 
   const subtotal = useMemo(() => {
     return productsInCart.reduce(
@@ -50,13 +52,17 @@ const OrderComfirm: React.FC = () => {
     );
   }, [productsInCart]);
 
-  const shippngFee = subtotal > 10000 ? 210 : 0;
+  const shippngFee = subtotal > 10000 ? 0 : 210;
   const tax = subtotal * 0.1;
   const total = subtotal + shippngFee + tax;
 
   const backToHome = useCallback(() => {
     dispatch(push("/"));
   }, [dispatch]);
+
+  const order = useCallback(() => {
+    dispatch(orderProduct(productsInCart, total));
+  }, [dispatch, productsInCart, total]);
 
   return (
     <section className="c-section-wrapin">
@@ -93,6 +99,17 @@ const OrderComfirm: React.FC = () => {
             label={"合計(税込)"}
             value={"¥" + total.toLocaleString()}
           />
+          <Divider />
+
+          <div className="module-spacer--extra-small" />
+
+          {productsInCart.length > 0 && (
+            <PrimaryButton
+              label={"購入する"}
+              onClick={order}
+              color={"primary"}
+            />
+          )}
           <GreenButton label={"ショッピングを続ける"} onClick={backToHome} />
         </div>
       </div>
