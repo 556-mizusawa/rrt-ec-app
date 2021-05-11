@@ -25,6 +25,7 @@ export type CreateStore = (
 export type initialStateUsersType = {
   favorite: [];
   cart: [];
+  orders: [];
   isSignedIn: boolean;
   role: string;
   uid: string;

@@ -21,12 +21,16 @@ export type userSignInActionType = {
 };
 
 export type userFetchProductActionType = {
-  type: "FETCH_PRODUCTS_IN_CART" | "FETCH_PRODUCTS_IN_FAVORITE";
+  type:
+    | "FETCH_PRODUCTS_IN_CART"
+    | "FETCH_PRODUCTS_IN_FAVORITE"
+    | "FETCH_ORDERS_HISTORY";
   payload: FFD;
 };
 
 export type userOpDispatch = Dispatch<
   | userActionType
+  | userFetchProductActionType
   | loadingActionType
   | CallHistoryMethodAction<[string, unknown?]>
 >;

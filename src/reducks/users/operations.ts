@@ -1,14 +1,15 @@
 import {
-  fetchProductsInCartAction,
-  fetchProductsInFavoriteAction,
-  signInAction,
-  signOutAction,
+    fetchOrdersHistoryAction,
+    fetchProductsInCartAction,
+    fetchProductsInFavoriteAction,
+    signInAction,
+    signOutAction,
 } from "./actions";
 import { push } from "connected-react-router";
 import {
-  isValidEmailFormat,
-  isValidPasswordFormat,
-  isValidRequiredInput,
+    isValidEmailFormat,
+    isValidPasswordFormat,
+    isValidRequiredInput,
 } from "../../function/common";
 import { hideLoadingAction, showLoadingAction } from "../loading/actions";
 import firebase from "firebase";
@@ -18,219 +19,233 @@ import { FFD } from "../../firebase/types";
 import { Dispatch } from "react";
 
 export const addProductToCart = (addedProduct: FFD) => {
-  return async (
-    dispatch: userOpDispatch,
-    getState: () => { users: { uid: string } }
-  ): Promise<void> => {
-    const uid = getState().users.uid;
-    const cartRef = db.collection("users").doc(uid).collection("cart").doc();
-    addedProduct["cartId"] = cartRef.id;
-    await cartRef.set(addedProduct);
-    dispatch(push("/cart"));
-  };
+    return async (
+        dispatch: userOpDispatch,
+        getState: () => { users: { uid: string } }
+    ): Promise<void> => {
+        const uid = getState().users.uid;
+        const cartRef = db.collection("users").doc(uid).collection("cart").doc();
+        addedProduct["cartId"] = cartRef.id;
+        await cartRef.set(addedProduct);
+        dispatch(push("/cart"));
+    };
 };
 
 export const addProductToFavorite = (keepProduct: FFD) => {
-  return async (
-    dispatch: userOpDispatch,
-    getState: () => { users: { uid: string } }
-  ): Promise<void> => {
-    const uid = getState().users.uid;
-    const favoriteRef = db
-      .collection("users")
-      .doc(uid)
-      .collection("favorite")
-      .doc();
-    keepProduct["favoriteId"] = favoriteRef.id;
-    await favoriteRef.set(keepProduct);
-  };
+    return async (
+        dispatch: userOpDispatch,
+        getState: () => { users: { uid: string } }
+    ): Promise<void> => {
+        const uid = getState().users.uid;
+        const favoriteRef = db.collection("users").doc(uid).collection("favorite").doc();
+        keepProduct["favoriteId"] = favoriteRef.id;
+        await favoriteRef.set(keepProduct);
+    };
+};
+
+export const fetchOrdersHistory = () => {
+    return async (
+        dispatch: userOpDispatch,
+        getState: () => { users: { uid: string } }
+    ): Promise<void> => {
+        const uid = getState().users.uid;
+        const list: FFD[] = [];
+
+        db.collection("users")
+            .doc(uid)
+            .collection("orders")
+            .orderBy("updated_at", "desc")
+            .get()
+            .then((snapshots) => {
+                snapshots.forEach((snapshot) => {
+                    const data = snapshot.data();
+                    list.push(data);
+                });
+                dispatch(fetchOrdersHistoryAction(list));
+            });
+    };
 };
 
 export const fetchProductsInCart = (products: FFD) => {
-  return async (
-    dispatch: Dispatch<{
-      type: string;
-      payload: FFD;
-    }>
-  ): Promise<void> => {
-    dispatch(fetchProductsInCartAction(products));
-  };
+    return async (
+        dispatch: Dispatch<{
+            type: string;
+            payload: FFD;
+        }>
+    ): Promise<void> => {
+        dispatch(fetchProductsInCartAction(products));
+    };
 };
 
 export const fetchProductsInFavorite = (products: FFD) => {
-  return async (
-    dispatch: Dispatch<{
-      type: string;
-      payload: FFD;
-    }>
-  ): Promise<void> => {
-    dispatch(fetchProductsInFavoriteAction(products));
-  };
+    return async (
+        dispatch: Dispatch<{
+            type: string;
+            payload: FFD;
+        }>
+    ): Promise<void> => {
+        dispatch(fetchProductsInFavoriteAction(products));
+    };
 };
 
 export const listenAuthState = () => {
-  return async (dispatch: userOpDispatch): Promise<firebase.Unsubscribe> => {
-    return auth.onAuthStateChanged((user) => {
-      if (user) {
-        const uid = user.uid;
+    return async (dispatch: userOpDispatch): Promise<firebase.Unsubscribe> => {
+        return auth.onAuthStateChanged((user) => {
+            if (user) {
+                const uid = user.uid;
 
-        db.collection("users")
-          .doc(uid)
-          .get()
-          .then((snapshot: FFD) => {
-            const data = snapshot.data();
+                db.collection("users")
+                    .doc(uid)
+                    .get()
+                    .then((snapshot: FFD) => {
+                        const data = snapshot.data();
 
-            dispatch(
-              signInAction({
-                isSignedIn: true,
-                role: data.role,
-                uid: uid,
-                username: data.username,
-              })
-            );
-          });
-      } else {
-        dispatch(push("/signin"));
-      }
-    });
-  };
+                        dispatch(
+                            signInAction({
+                                isSignedIn: true,
+                                role: data.role,
+                                uid: uid,
+                                username: data.username,
+                            })
+                        );
+                    });
+            } else {
+                dispatch(push("/signin"));
+            }
+        });
+    };
 };
 
 export const resetPassword = (email: string) => {
-  return async (dispatch: userOpDispatch): Promise<false | undefined> => {
-    if (!isValidRequiredInput(email)) {
-      alert("必須項目が未入力です。");
-      return false;
-    } else {
-      auth
-        .sendPasswordResetEmail(email)
-        .then(() => {
-          alert(
-            "入力されたアドレスにパスワードリセット用のメールをお送りしました。"
-          );
-          dispatch(push("./signin"));
-        })
-        .catch(() => {
-          alert(
-            "パスワードリセットに失敗しました。通信環境をご確認の上再度お試し下さい。"
-          );
-        });
-    }
-  };
+    return async (dispatch: userOpDispatch): Promise<false | undefined> => {
+        if (!isValidRequiredInput(email)) {
+            alert("必須項目が未入力です。");
+            return false;
+        } else {
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    alert("入力されたアドレスにパスワードリセット用のメールをお送りしました。");
+                    dispatch(push("./signin"));
+                })
+                .catch(() => {
+                    alert(
+                        "パスワードリセットに失敗しました。通信環境をご確認の上再度お試し下さい。"
+                    );
+                });
+        }
+    };
 };
 
 export const signIn = (email: string, password: string) => {
-  return async (dispatch: userOpDispatch): Promise<false | undefined> => {
-    dispatch(showLoadingAction("Sign in..."));
-    if (!isValidRequiredInput(email, password)) {
-      dispatch(hideLoadingAction());
-      alert("メールアドレスかパスワードが未入力です。");
-      return false;
-    }
-    if (!isValidEmailFormat(email)) {
-      dispatch(hideLoadingAction());
-      alert("メールアドレスの形式が不正です。");
-      return false;
-    }
+    return async (dispatch: userOpDispatch): Promise<false | undefined> => {
+        dispatch(showLoadingAction("Sign in..."));
+        if (!isValidRequiredInput(email, password)) {
+            dispatch(hideLoadingAction());
+            alert("メールアドレスかパスワードが未入力です。");
+            return false;
+        }
+        if (!isValidEmailFormat(email)) {
+            dispatch(hideLoadingAction());
+            alert("メールアドレスの形式が不正です。");
+            return false;
+        }
 
-    auth.signInWithEmailAndPassword(email, password).then((result) => {
-      const user = result.user;
+        auth.signInWithEmailAndPassword(email, password).then((result) => {
+            const user = result.user;
 
-      if (user) {
-        const uid = user.uid;
+            if (user) {
+                const uid = user.uid;
 
-        db.collection("users")
-          .doc(uid)
-          .get()
-          .then((snapshot: FFD) => {
-            const data = snapshot.data();
+                db.collection("users")
+                    .doc(uid)
+                    .get()
+                    .then((snapshot: FFD) => {
+                        const data = snapshot.data();
 
-            dispatch(
-              signInAction({
-                isSignedIn: true,
-                role: data.role,
-                uid: uid,
-                username: data.username,
-              })
-            );
+                        dispatch(
+                            signInAction({
+                                isSignedIn: true,
+                                role: data.role,
+                                uid: uid,
+                                username: data.username,
+                            })
+                        );
 
-            dispatch(push("/"));
-          });
-      }
-    });
-  };
+                        dispatch(push("/"));
+                    });
+            }
+        });
+    };
 };
 
 export const signUp: (
-  username: string,
-  email: string,
-  password: string,
-  confirmPassword: string
+    username: string,
+    email: string,
+    password: string,
+    confirmPassword: string
 ) => (dispatch: userOpDispatch) => Promise<false | void> = (
-  username,
-  email,
-  password,
-  confirmPassword
+    username,
+    email,
+    password,
+    confirmPassword
 ) => {
-  return async (dispatch) => {
-    if (!isValidRequiredInput(email, password, confirmPassword)) {
-      alert("必須項目が未入力です。");
-      return false;
-    }
-
-    if (!isValidEmailFormat(email)) {
-      alert("メールアドレスの形式が不正です。もう1度お試しください。");
-      return false;
-    }
-    if (password !== confirmPassword) {
-      alert("パスワードが一致しません。もう1度お試しください。");
-      return false;
-    }
-
-    if (!isValidPasswordFormat(password)) {
-      alert("パスワードは6文字以上15文字以内半角英数字で入力してください");
-      return false;
-    }
-
-    if (password.length < 6) {
-      alert("パスワードは6文字以上で入力してください。");
-      return false;
-    }
-
-    return auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        const user = result.user;
-
-        if (user) {
-          const uid = user.uid;
-          const timestamp = FirebaseTimeStamp.now();
-
-          const userInitialData = {
-            created_at: timestamp,
-            email: email,
-            role: "customer",
-            uid: "uid",
-            updated_at: timestamp,
-            username: username,
-          };
-
-          db.collection("users")
-            .doc(uid)
-            .set(userInitialData)
-            .then(() => {
-              dispatch(push("/"));
-            });
+    return async (dispatch) => {
+        if (!isValidRequiredInput(email, password, confirmPassword)) {
+            alert("必須項目が未入力です。");
+            return false;
         }
-      });
-  };
+
+        if (!isValidEmailFormat(email)) {
+            alert("メールアドレスの形式が不正です。もう1度お試しください。");
+            return false;
+        }
+        if (password !== confirmPassword) {
+            alert("パスワードが一致しません。もう1度お試しください。");
+            return false;
+        }
+
+        if (!isValidPasswordFormat(password)) {
+            alert("パスワードは6文字以上15文字以内半角英数字で入力してください");
+            return false;
+        }
+
+        if (password.length < 6) {
+            alert("パスワードは6文字以上で入力してください。");
+            return false;
+        }
+
+        return auth.createUserWithEmailAndPassword(email, password).then((result) => {
+            const user = result.user;
+
+            if (user) {
+                const uid = user.uid;
+                const timestamp = FirebaseTimeStamp.now();
+
+                const userInitialData = {
+                    created_at: timestamp,
+                    email: email,
+                    role: "customer",
+                    uid: "uid",
+                    updated_at: timestamp,
+                    username: username,
+                };
+
+                db.collection("users")
+                    .doc(uid)
+                    .set(userInitialData)
+                    .then(() => {
+                        dispatch(push("/"));
+                    });
+            }
+        });
+    };
 };
 
 export const signOut = () => {
-  return async (dispatch: userOpDispatch): Promise<void> => {
-    auth.signOut().then(() => {
-      dispatch(signOutAction());
-      dispatch(push("/.signin"));
-    });
-  };
+    return async (dispatch: userOpDispatch): Promise<void> => {
+        auth.signOut().then(() => {
+            dispatch(signOutAction());
+            dispatch(push("/.signin"));
+        });
+    };
 };
