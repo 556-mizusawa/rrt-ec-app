@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOrdersHistory } from "../reducks/users/selectors";
 import { initialStateUsersType } from "../reducks/store/type";
 import { fetchOrdersHistory } from "../reducks/users/operations";
+import { OrderHistoryItem } from "../components/Products";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -36,7 +37,12 @@ const OrderHistory: React.FC = () => {
 
     return (
         <section className="c-section-wrapin">
-            <List className={classes.orderList}></List>
+            <List className={classes.orderList}>
+                {orders.length > 0 &&
+                    orders.map((order: { id: string; amount: number; updated_at: string; shipping_date: string }) => (
+                        <OrderHistoryItem order={order} key={order.id} />
+                    ))}
+            </List>
         </section>
     );
 };

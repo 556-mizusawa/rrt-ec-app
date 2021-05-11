@@ -65,14 +65,12 @@ import HTMLReactParser from "html-react-parser";
  * @param {string} text The row text
  * @returns {void | string | never} The formatted text
  */
-export const returnCodeToBr: (
-  text: string
-) => string | JSX.Element | JSX.Element[] = (text: string) => {
-  if (text === "") {
-    return text;
-  } else {
-    return HTMLReactParser(text.replace(/\r?\n/g, "<br/>"));
-  }
+export const returnCodeToBr: (text: string) => string | JSX.Element | JSX.Element[] = (text: string) => {
+    if (text === "") {
+        return text;
+    } else {
+        return HTMLReactParser(text.replace(/\r?\n/g, "<br/>"));
+    }
 };
 
 /**
@@ -81,17 +79,11 @@ export const returnCodeToBr: (
  * @returns {string} "YYYY-MM-DD"
  */
 export const dateToString = (dt: {
-  getFullYear: () => string;
-  getMonth: () => number;
-  getDate: () => string;
+    getFullYear: () => string;
+    getMonth: () => number;
+    getDate: () => string;
 }): string => {
-  return (
-    dt.getFullYear() +
-    "-" +
-    ("00" + (dt.getMonth() + 1)).slice(-2) +
-    "-" +
-    ("00" + dt.getDate()).slice(-2)
-  );
+    return dt.getFullYear() + "-" + ("00" + (dt.getMonth() + 1)).slice(-2) + "-" + ("00" + dt.getDate()).slice(-2);
 };
 
 /**
@@ -100,26 +92,26 @@ export const dateToString = (dt: {
  * @returns {string} "YYYY-MM-DD"
  */
 export const datetimeToString = (dt: {
-  getFullYear: () => string;
-  getMonth: () => number;
-  getDate: () => string;
-  getHours: () => string;
-  getMinutes: () => string;
-  getSeconds: () => string;
+    getFullYear: () => string;
+    getMonth: () => number;
+    getDate: () => string;
+    getHours: () => string;
+    getMinutes: () => string;
+    getSeconds: () => string;
 }): string => {
-  return (
-    dt.getFullYear() +
-    "-" +
-    ("00" + (dt.getMonth() + 1)).slice(-2) +
-    "-" +
-    ("00" + dt.getDate()).slice(-2) +
-    " " +
-    ("00" + dt.getHours()).slice(-2) +
-    ":" +
-    ("00" + dt.getMinutes()).slice(-2) +
-    ":" +
-    ("00" + dt.getSeconds()).slice(-2)
-  );
+    return (
+        dt.getFullYear() +
+        "-" +
+        ("00" + (dt.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("00" + dt.getDate()).slice(-2) +
+        " " +
+        ("00" + dt.getHours()).slice(-2) +
+        ":" +
+        ("00" + dt.getMinutes()).slice(-2) +
+        ":" +
+        ("00" + dt.getSeconds()).slice(-2)
+    );
 };
 
 /**
@@ -128,8 +120,8 @@ export const datetimeToString = (dt: {
  * @returns {boolean}
  */
 export const isValidEmailFormat = (email: string): boolean => {
-  const regex = /^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  return regex.test(email);
+    const regex = /^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    return regex.test(email);
 };
 
 /**
@@ -138,8 +130,8 @@ export const isValidEmailFormat = (email: string): boolean => {
  * @returns {boolean}
  */
 export const isValidPasswordFormat = (password: string): boolean => {
-  const regexp = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]{6,15}$/i;
-  return regexp.test(password);
+    const regexp = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]{6,15}$/i;
+    return regexp.test(password);
 };
 
 /**
@@ -148,11 +140,11 @@ export const isValidPasswordFormat = (password: string): boolean => {
  * @returns {boolean}
  */
 export const isValidRequiredInput = (...args: string[]): boolean => {
-  let validator = true;
-  for (let i = 0; i < args.length; i = (i + 1) | 0) {
-    if (args[i] === "") {
-      validator = false;
+    let validator = true;
+    for (let i = 0; i < args.length; i = (i + 1) | 0) {
+        if (args[i] === "") {
+            validator = false;
+        }
     }
-  }
-  return validator;
+    return validator;
 };
