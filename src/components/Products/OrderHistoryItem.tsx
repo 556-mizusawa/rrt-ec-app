@@ -2,10 +2,12 @@ import React from "react";
 import Divider from "@material-ui/core/Divider";
 import { TextDetail } from "../UIkit";
 import { dateToString, datetimeToString } from "../../function/common";
+import { OrderedProducts } from ".";
 
 const OrderHistoryItem: React.FC<{
     order: {
         id: string;
+        products: [];
         amount: number;
         updated_at: any;
         shipping_date: any;
@@ -24,6 +26,8 @@ const OrderHistoryItem: React.FC<{
             <TextDetail label={"注文日時"} value={orderedDateTime} />
             <TextDetail label={"発送予定日"} value={shippingDate} />
             <TextDetail label={"注文金額"} value={price} />
+
+            {order.products.length > 0 && <OrderedProducts products={order.products} />}
 
             <div className="module-spacer--extra-extra-small" />
             <Divider />

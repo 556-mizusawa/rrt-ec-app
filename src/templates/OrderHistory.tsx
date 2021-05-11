@@ -39,9 +39,15 @@ const OrderHistory: React.FC = () => {
         <section className="c-section-wrapin">
             <List className={classes.orderList}>
                 {orders.length > 0 &&
-                    orders.map((order: { id: string; amount: number; updated_at: string; shipping_date: string }) => (
-                        <OrderHistoryItem order={order} key={order.id} />
-                    ))}
+                    orders.map(
+                        (order: {
+                            id: string;
+                            amount: number;
+                            products: [];
+                            updated_at: string;
+                            shipping_date: string;
+                        }) => <OrderHistoryItem order={order} key={order.id} />
+                    )}
             </List>
         </section>
     );
