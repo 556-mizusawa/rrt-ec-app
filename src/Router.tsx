@@ -12,6 +12,7 @@ import {
   OrderComfirm,
   OrderReset,
   User,
+  OrderHistory,
 } from "./templates";
 import Auth from "./Auth";
 
@@ -30,6 +31,7 @@ const Router: React.FC = () => {
         <Route exact path="/cart" component={CartList} />
         <Route exact path="/favorite" component={FavoriteList} />
         <Route exact path="/order/comfirm" component={OrderComfirm} />
+        <Route exact path="/order/history" component={OrderHistory} />
         <Route exact path="/order/reset" component={OrderReset} />
         <Route exact path="/user" component={User} />
       </Auth>

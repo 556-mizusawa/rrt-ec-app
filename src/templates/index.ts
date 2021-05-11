@@ -2,6 +2,7 @@ export { default as CartList } from "./CartList";
 export { default as FavoriteList } from "./FavoriteList";
 export { default as Home } from "./Home";
 export { default as OrderComfirm } from "./OrderComfirm";
+export { default as OrderHistory } from "./OrderHistory";
 export { default as OrderReset } from "./OrderReset";
 export { default as ProductDetail } from "./ProductDetail";
 export { default as ProductEdit } from "./ProductEdit";
