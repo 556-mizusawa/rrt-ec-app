@@ -102,8 +102,6 @@ const ClosableDrawer: React.FC<{
             });
     }, []);
 
-    console.log(filters);
-
     return (
         <nav className={classes.drawer}>
             <Drawer

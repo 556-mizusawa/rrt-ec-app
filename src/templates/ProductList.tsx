@@ -10,9 +10,13 @@ const ProductList: React.FC = () => {
     const selector = useSelector((state: initialStateProductsType) => state);
     const products = getProducts(selector);
 
+    const query = selector.router.location.search;
+    const gender = /^\?gender=/.test(query) ? query.split("?gender=")[1] : "";
+    const category = /^\?category=/.test(query) ? query.split("?category=")[1] : "";
+
     useEffect(() => {
-        dispatch(fetchProducts());
-    }, [dispatch]);
+        dispatch(fetchProducts(gender, category));
+    }, [category, dispatch, gender, query]);
 
     return (
         <section className="c-section-wrapin">

@@ -23,24 +23,25 @@ export const deleteProduct = (id: string) => {
     };
 };
 
-export const fetchProducts = () => {
+export const fetchProducts = (gender: string, category: string) => {
     return async (
         dispatch: Dispatch<{
             type: string;
             payload: FFD;
         }>
     ): Promise<void> => {
-        productsRef
-            .orderBy("updated_at", "desc")
-            .get()
-            .then((snapshots) => {
-                const productList: FFD = [];
-                snapshots.forEach((snapshot) => {
-                    const product: FFD = snapshot.data();
-                    productList.push(product);
-                });
-                dispatch(fetchProductsAction(productList));
+        let query = productsRef.orderBy("updated_at", "desc");
+        query = gender !== "" ? query.where("gender", "==", gender) : query;
+        query = category !== "" ? query.where("category", "==", category) : query;
+
+        query.get().then((snapshots) => {
+            const productList: FFD = [];
+            snapshots.forEach((snapshot) => {
+                const product: FFD = snapshot.data();
+                productList.push(product);
             });
+            dispatch(fetchProductsAction(productList));
+        });
     };
 };
 
