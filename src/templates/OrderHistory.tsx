@@ -39,7 +39,7 @@ const OrderHistory: React.FC = () => {
                 {orders.length > 0 &&
                     orders.map(
                         (order: {
-                            id: number;
+                            id: string;
                             amount: number;
                             products: [];
                             updated_at: string;
