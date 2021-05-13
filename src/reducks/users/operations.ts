@@ -6,11 +6,7 @@ import {
     signOutAction,
 } from "./actions";
 import { push } from "connected-react-router";
-import {
-    isValidEmailFormat,
-    isValidPasswordFormat,
-    isValidRequiredInput,
-} from "../../function/common";
+import { isValidEmailFormat, isValidPasswordFormat, isValidRequiredInput } from "../../function/common";
 import { hideLoadingAction, showLoadingAction } from "../loading/actions";
 import firebase from "firebase";
 import { auth, db, FirebaseTimeStamp } from "../../firebase/index";
@@ -19,10 +15,7 @@ import { FFD } from "../../firebase/types";
 import { Dispatch } from "react";
 
 export const addProductToCart = (addedProduct: FFD) => {
-    return async (
-        dispatch: userOpDispatch,
-        getState: () => { users: { uid: string } }
-    ): Promise<void> => {
+    return async (dispatch: userOpDispatch, getState: () => { users: { uid: string } }): Promise<void> => {
         const uid = getState().users.uid;
         const cartRef = db.collection("users").doc(uid).collection("cart").doc();
         addedProduct["cartId"] = cartRef.id;
@@ -32,10 +25,7 @@ export const addProductToCart = (addedProduct: FFD) => {
 };
 
 export const addProductToFavorite = (keepProduct: FFD) => {
-    return async (
-        dispatch: userOpDispatch,
-        getState: () => { users: { uid: string } }
-    ): Promise<void> => {
+    return async (dispatch: userOpDispatch, getState: () => { users: { uid: string } }): Promise<void> => {
         const uid = getState().users.uid;
         const favoriteRef = db.collection("users").doc(uid).collection("favorite").doc();
         keepProduct["favoriteId"] = favoriteRef.id;
@@ -44,10 +34,7 @@ export const addProductToFavorite = (keepProduct: FFD) => {
 };
 
 export const fetchOrdersHistory = () => {
-    return async (
-        dispatch: userOpDispatch,
-        getState: () => { users: { uid: string } }
-    ): Promise<void> => {
+    return async (dispatch: userOpDispatch, getState: () => { users: { uid: string } }): Promise<void> => {
         const uid = getState().users.uid;
         const list: FFD[] = [];
 
@@ -128,9 +115,7 @@ export const resetPassword = (email: string) => {
                     dispatch(push("./signin"));
                 })
                 .catch(() => {
-                    alert(
-                        "パスワードリセットに失敗しました。通信環境をご確認の上再度お試し下さい。"
-                    );
+                    alert("パスワードリセットに失敗しました。通信環境をご確認の上再度お試し下さい。");
                 });
         }
     };
@@ -164,6 +149,8 @@ export const signIn = (email: string, password: string) => {
 
                         dispatch(
                             signInAction({
+                                cart: [],
+                                favorite: [],
                                 isSignedIn: true,
                                 role: data.role,
                                 uid: uid,
@@ -183,12 +170,7 @@ export const signUp: (
     email: string,
     password: string,
     confirmPassword: string
-) => (dispatch: userOpDispatch) => Promise<false | void> = (
-    username,
-    email,
-    password,
-    confirmPassword
-) => {
+) => (dispatch: userOpDispatch) => Promise<false | void> = (username, email, password, confirmPassword) => {
     return async (dispatch) => {
         if (!isValidRequiredInput(email, password, confirmPassword)) {
             alert("必須項目が未入力です。");

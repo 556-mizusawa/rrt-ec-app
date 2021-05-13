@@ -30,6 +30,8 @@ export const signInAction = (userState: userSignInActionType): userActionType =>
     return {
         type: "SIGN_IN",
         payload: {
+            favorite: [],
+            cart: [],
             isSignedIn: true,
             role: userState.role,
             uid: userState.uid,
