@@ -33,15 +33,13 @@ const OrderHistory: React.FC = () => {
         dispatch(fetchOrdersHistory());
     }, [dispatch]);
 
-    console.log(orders);
-
     return (
         <section className="c-section-wrapin">
             <List className={classes.orderList}>
                 {orders.length > 0 &&
                     orders.map(
                         (order: {
-                            id: string;
+                            id: number;
                             amount: number;
                             products: [];
                             updated_at: string;
